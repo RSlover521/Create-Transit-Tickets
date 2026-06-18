@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "minecraft:item/name_tag"
+    "layer0": "create_transit_tickets:item/transit_ticket"
   }
 }
