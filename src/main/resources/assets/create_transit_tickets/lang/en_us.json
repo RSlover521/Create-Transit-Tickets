@@ -1,0 +1,13 @@
+{
+  "itemGroup.create_transit_ticket.create_transit_ticket_tab": "Create: Transit Tickets",
+  "item.create_transit_tickets.blank_ticket": "Blank Ticket",
+  "item.create_transit_tickets.ticket_blueprint": "Ticket Blueprint",
+  "item.create_transit_tickets.transit_ticket": "Transit Ticket",
+  "tooltip.create_transit_tickets.duration": "Duration: %s",
+  "tooltip.create_transit_tickets.blueprint_usage": "Use with a Blank Ticket in the other hand",
+  "tooltip.create_transit_tickets.unissued": "Unissued",
+  "tooltip.create_transit_tickets.valid": "Valid",
+  "tooltip.create_transit_tickets.remaining": "Remaining: %s",
+  "tooltip.create_transit_tickets.expired": "Expired",
+  "command.create_transit_tickets.blueprint_created": "Created blueprint '%s' (%s)"
+}
