@@ -1,9 +1,19 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "ingredients": [
-    { "item": "create_transit_tickets:blank_ticket" },
-    { "item": "minecraft:iron_nugget" }
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "PPP",
+    "PSP",
+    "PPP"
   ],
+  "key": {
+    "P": {
+      "item": "minecraft:paper"
+    },
+    "S": {
+      "item": "create:sturdy_sheet"
+    }
+  },
   "result": {
     "item": "create_transit_tickets:ticket_blueprint"
   }
