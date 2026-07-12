@@ -1,33 +1,15 @@
-<h1 align="center">Create: Transit Tickets</h1>
+# Create: Transit Tickets
 
-<p align="center">
-  <img width="256" height="256" alt="Create: Transit Tickets mod icon" src="src/main/resources/create_transit_tickets.png">
-</p>
+![Create: Transit Tickets mod icon](https://raw.githubusercontent.com/RSlover521/Create-Transit-Tickets/main/src/main/resources/create_transit_tickets.png)
 
-<p align="center">
-  Survival-friendly, configurable transit tickets for Create train networks.
-</p>
+Survival-friendly, configurable transit tickets for Create train networks.
 
-<p align="center">
-  <a href="https://github.com/RSlover521/Create-Transit-Tickets">
-    <img alt="GitHub Repository" src="https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github&color=darkcyan">
-  </a>
-  <a href="https://github.com/RSlover521/Create-Transit-Tickets/releases">
-    <img alt="Latest Release" src="https://img.shields.io/github/v/release/RSlover521/Create-Transit-Tickets?style=for-the-badge&logo=github&color=lime">
-  </a>
-  <a href="https://github.com/RSlover521/Create-Transit-Tickets/blob/main/LICENSE">
-    <img alt="License" src="https://img.shields.io/github/license/RSlover521/Create-Transit-Tickets?style=for-the-badge&logo=github&color=red">
-  </a>
-  <a href="https://github.com/RSlover521/Create-Transit-Tickets/discussions">
-    <img alt="Discussions" src="https://img.shields.io/github/discussions/RSlover521/Create-Transit-Tickets?style=for-the-badge&color=blue&logo=github">
-  </a>
-  <a href="https://github.com/RSlover521/Create-Transit-Tickets/issues">
-    <img alt="Open Issues" src="https://img.shields.io/github/issues/RSlover521/Create-Transit-Tickets?style=for-the-badge&logo=github&color=limegreen">
-  </a>
-  <a href="https://github.com/RSlover521/Create-Transit-Tickets/releases">
-    <img alt="Total Downloads" src="https://img.shields.io/github/downloads/RSlover521/Create-Transit-Tickets/total?style=for-the-badge&logo=github&color=white">
-  </a>
-</p>
+[![GitHub Repository](https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github&color=darkcyan)](https://github.com/RSlover521/Create-Transit-Tickets)
+[![Latest Release](https://img.shields.io/github/v/release/RSlover521/Create-Trans./it-Tickets?style=for-the-badge&logo=github&color=lime)](https://github.com/RSlover521/Create-Transit-Tickets/releases)
+[![License](https://img.shields.io/github/license/RSlover521/Create-Transit-Tickets?style=for-the-badge&logo=github&color=red)](https://github.com/RSlover521/Create-Transit-Tickets/blob/main/LICENSE)
+[![Discussions](https://img.shields.io/github/discussions/RSlover521/Create-Transit-Tickets?style=for-the-badge&color=blue&logo=github)](https://github.com/RSlover521/Create-Transit-Tickets/discussions)
+[![Open Issues](https://img.shields.io/github/issues/RSlover521/Create-Transit-Tickets?style=for-the-badge&logo=github&color=limegreen)](https://github.com/RSlover521/Create-Transit-Tickets/issues)
+[![Total Downloads](https://img.shields.io/github/downloads/RSlover521/Create-Transit-Tickets/total?style=for-the-badge&logo=github&color=white)](https://github.com/RSlover521/Create-Transit-Tickets/releases)
 
 ---
 
@@ -118,7 +100,7 @@ Translations are welcome through pull requests.
 
 ## 📝 License
 
-- MIT License — See [`LICENSE`](LICENSE) for details.
+- MIT License — See the [project license](https://github.com/RSlover521/Create-Transit-Tickets/blob/main/LICENSE) for details.
 - Minecraft, Minecraft Forge, and Create belong to their respective owners.
 
 ---

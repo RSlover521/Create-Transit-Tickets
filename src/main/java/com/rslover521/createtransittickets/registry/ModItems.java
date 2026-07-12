@@ -4,6 +4,7 @@ import com.rslover521.createtransittickets.CreateTransitTickets;
 import com.rslover521.createtransittickets.item.BlankTicketItem;
 import com.rslover521.createtransittickets.item.TicketBlueprintItem;
 import com.rslover521.createtransittickets.item.TransitTicketItem;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -20,6 +21,8 @@ public final class ModItems {
             () -> new TicketBlueprintItem(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> TRANSIT_TICKET = ITEMS.register("transit_ticket",
             () -> new TransitTicketItem(new Item.Properties().stacksTo(16)));
+    public static final RegistryObject<Item> TICKET_GATE = ITEMS.register("ticket_gate",
+            () -> new BlockItem(ModBlocks.TICKET_GATE.get(), new Item.Properties()));
 
     private ModItems() {
     }

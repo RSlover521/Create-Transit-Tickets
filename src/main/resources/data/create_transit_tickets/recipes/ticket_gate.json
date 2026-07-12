@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "B B",
+    "SIS",
+    "B B"
+  ],
+  "key": {
+    "B": {
+      "item": "create:industrial_iron_block"
+    },
+    "S": {
+      "item": "create:sturdy_sheet"
+    },
+    "I": {
+      "item": "create:iron_sheet"
+    }
+  },
+  "result": {
+    "item": "create_transit_tickets:ticket_blueprint"
+  }
+}

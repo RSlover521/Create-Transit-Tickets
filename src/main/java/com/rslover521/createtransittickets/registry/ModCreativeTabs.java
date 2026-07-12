@@ -22,6 +22,7 @@ public class ModCreativeTabs {
                                 output.accept(ModItems.TRANSIT_TICKET.get());
                                 output.accept(ModItems.BLANK_TICKET.get());
                                 output.accept(ModItems.TICKET_BLUEPRINT.get());
+                                output.accept(ModItems.TICKET_GATE.get());
                             })
                             .build());
 
