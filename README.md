@@ -110,7 +110,7 @@ Examples:
 - Create Deployer ticket printing
 - Route-specific and zone-based tickets
 - Configurable default ticket types and allowed durations
-- Optional compatibility with other Create transit and security add-ons
+- Optional compatibility with other Create transit and security add-onsS
 
 Planned features may change as development continues.
 
