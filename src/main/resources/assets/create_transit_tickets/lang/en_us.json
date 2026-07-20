@@ -5,12 +5,16 @@
   "item.create_transit_tickets.ticket_blueprint": "Ticket Blueprint",
   "item.create_transit_tickets.transit_ticket": "Transit Ticket",
   "tooltip.create_transit_tickets.duration": "Duration: %s",
+  "tooltip.create_transit_tickets.allowed_passages": "Passages: %s",
+  "tooltip.create_transit_tickets.passages_remaining": "Passages remaining: %s/%s",
+  "tooltip.create_transit_tickets.used_up": "Used Up",
   "tooltip.create_transit_tickets.blueprint_usage": "Use with a Blank Ticket in the other hand",
   "tooltip.create_transit_tickets.unissued": "Unissued",
   "tooltip.create_transit_tickets.valid": "Valid",
   "tooltip.create_transit_tickets.remaining": "Remaining: %s",
   "tooltip.create_transit_tickets.expired": "Expired",
   "command.create_transit_tickets.blueprint_created": "Created blueprint '%s' (%s)",
+  "command.create_transit_tickets.passages": "%s passages",
   "message.create_transit_tickets.ticket_gate.no_ticket": "You are not holding a transit ticket.",
   "message.create_transit_tickets.ticket_gate.invalid_ticket": "This transit ticket is invalid."
 }

@@ -67,6 +67,19 @@ Creative players and command-level operators can generate configured blueprints 
 /transittickets blueprint <duration_ticks> [name]
 ```
 
+To make tickets valid for a fixed number of gate passages instead of a fixed time:
+
+```text
+/transittickets blueprint passages <count> [name]
+```
+
+For example, these create one-use and five-use ticket blueprints:
+
+```text
+/transittickets blueprint passages 1 Single Ride
+/transittickets blueprint passages 5 Five Ride Pass
+```
+
 For example, a 30-minute ticket lasts 36,000 ticks:
 
 ```text

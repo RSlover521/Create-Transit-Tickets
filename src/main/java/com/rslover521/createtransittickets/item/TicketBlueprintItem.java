@@ -45,8 +45,13 @@ public final class TicketBlueprintItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
-        tooltip.add(Component.translatable("tooltip.create_transit_tickets.duration",
-                TicketData.formatDuration(TicketData.getDuration(stack))).withStyle(ChatFormatting.GRAY));
+        if (TicketData.isPassageLimited(stack)) {
+            tooltip.add(Component.translatable("tooltip.create_transit_tickets.allowed_passages",
+                    TicketData.getAllowedPassages(stack)).withStyle(ChatFormatting.GRAY));
+        } else {
+            tooltip.add(Component.translatable("tooltip.create_transit_tickets.duration",
+                    TicketData.formatDuration(TicketData.getDuration(stack))).withStyle(ChatFormatting.GRAY));
+        }
         tooltip.add(Component.translatable("tooltip.create_transit_tickets.blueprint_usage")
                 .withStyle(ChatFormatting.DARK_GRAY));
     }

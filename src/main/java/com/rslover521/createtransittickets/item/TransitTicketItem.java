@@ -30,6 +30,17 @@ public final class TransitTicketItem extends Item {
             return;
         }
 
+        if (TicketData.isPassageLimited(stack)) {
+            int remaining = TicketData.getRemainingPassages(stack);
+            tooltip.add(Component.translatable(remaining > 0
+                            ? "tooltip.create_transit_tickets.valid"
+                            : "tooltip.create_transit_tickets.used_up")
+                    .withStyle(remaining > 0 ? ChatFormatting.GREEN : ChatFormatting.RED));
+            tooltip.add(Component.translatable("tooltip.create_transit_tickets.passages_remaining", remaining,
+                    TicketData.getAllowedPassages(stack)).withStyle(ChatFormatting.GRAY));
+            return;
+        }
+
         long now = level == null ? TicketData.getIssuedTime(stack) : level.getGameTime();
         long remaining = TicketData.getValidUntil(stack) - now;
         if (remaining > 0) {

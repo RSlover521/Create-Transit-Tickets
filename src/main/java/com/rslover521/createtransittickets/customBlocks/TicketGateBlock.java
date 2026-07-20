@@ -16,6 +16,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -32,15 +33,18 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public final class TicketGateBlock extends Block {
     public static final BooleanProperty OPEN = BooleanProperty.create("open");
+    public static final BooleanProperty PASSAGE_STARTED = BooleanProperty.create("passage_started");
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
-    private static final int OPEN_TIME_TICKS = 40;
+    private static final int OPEN_TIMEOUT_TICKS = 100;
+    private static final int PASSAGE_CHECK_TICKS = 1;
     private static final VoxelShape CLOSED_NORTH_SOUTH_SHAPE = Shapes.or(
             Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 2.0D),
             Block.box(0.0D, 0.0D, 14.0D, 16.0D, 16.0D, 16.0D),
@@ -84,7 +88,8 @@ public final class TicketGateBlock extends Block {
         super(properties.sound(SoundType.METAL).noOcclusion());
         registerDefaultState(stateDefinition.any()
                 .setValue(FACING, Direction.NORTH)
-                .setValue(OPEN, false));
+                .setValue(OPEN, false)
+                .setValue(PASSAGE_STARTED, false));
     }
 
     @Override
@@ -109,6 +114,7 @@ public final class TicketGateBlock extends Block {
         }
 
         if (!level.isClientSide) {
+            TicketData.consumePassage(heldStack);
             playAcceptedSound(level, pos);
             openGate(state, level, pos);
         }
@@ -118,9 +124,43 @@ public final class TicketGateBlock extends Block {
 
     @Override
     public void tick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        if (state.getValue(OPEN)) {
-            level.setBlock(pos, state.setValue(OPEN, false), Block.UPDATE_ALL);
+        if (!state.getValue(OPEN)) {
+            return;
         }
+
+        if (!state.getValue(PASSAGE_STARTED)) {
+            level.setBlock(pos, state.setValue(OPEN, false), Block.UPDATE_ALL);
+            return;
+        }
+
+        boolean playerStillInGate = !level.getEntitiesOfClass(
+                Player.class,
+                new AABB(pos),
+                player -> player.isAlive() && !player.isSpectator()
+        ).isEmpty();
+
+        if (playerStillInGate) {
+            level.scheduleTick(pos, this, PASSAGE_CHECK_TICKS);
+        } else {
+            level.setBlock(pos, state
+                    .setValue(OPEN, false)
+                    .setValue(PASSAGE_STARTED, false), Block.UPDATE_ALL);
+        }
+    }
+
+    @Override
+    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+        if (!level.isClientSide
+                && state.getValue(OPEN)
+                && !state.getValue(PASSAGE_STARTED)
+                && entity instanceof Player player
+                && player.isAlive()
+                && !player.isSpectator()) {
+            level.setBlock(pos, state.setValue(PASSAGE_STARTED, true), Block.UPDATE_ALL);
+            level.scheduleTick(pos, this, PASSAGE_CHECK_TICKS);
+        }
+
+        super.entityInside(state, level, pos, entity);
     }
 
     @Override
@@ -150,21 +190,23 @@ public final class TicketGateBlock extends Block {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, OPEN);
+        builder.add(FACING, OPEN, PASSAGE_STARTED);
     }
 
     private static boolean isValidTicket(ItemStack stack, Level level) {
         return stack.is(ModItems.TRANSIT_TICKET.get())
                 && TicketData.isIssued(stack)
-                && TicketData.getValidUntil(stack) > level.getGameTime();
+                && (TicketData.isPassageLimited(stack)
+                ? TicketData.getRemainingPassages(stack) > 0
+                : TicketData.getValidUntil(stack) > level.getGameTime());
     }
 
     private static void openGate(BlockState state, Level level, BlockPos pos) {
-        if (!state.getValue(OPEN)) {
-            level.setBlock(pos, state.setValue(OPEN, true), Block.UPDATE_ALL);
-        }
-
-        level.scheduleTick(pos, state.getBlock(), OPEN_TIME_TICKS);
+        BlockState openState = state
+                .setValue(OPEN, true)
+                .setValue(PASSAGE_STARTED, false);
+        level.setBlock(pos, openState, Block.UPDATE_ALL);
+        level.scheduleTick(pos, state.getBlock(), OPEN_TIMEOUT_TICKS);
     }
 
     private static void playAcceptedSound(Level level, BlockPos pos) {

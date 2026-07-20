@@ -2,6 +2,7 @@ package com.rslover521.createtransittickets.command;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.LongArgumentType;
+import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.rslover521.createtransittickets.util.TicketData;
 import net.minecraft.commands.CommandSourceStack;
@@ -18,6 +19,14 @@ public final class TicketCommands {
         dispatcher.register(Commands.literal("transittickets")
                 .requires(TicketCommands::mayCreateBlueprint)
                 .then(Commands.literal("blueprint")
+                        .then(Commands.literal("passages")
+                                .then(Commands.argument("count", IntegerArgumentType.integer(1))
+                                        .executes(context -> givePassageBlueprint(context.getSource(),
+                                                IntegerArgumentType.getInteger(context, "count"), "Transit Ticket"))
+                                        .then(Commands.argument("name", StringArgumentType.greedyString())
+                                                .executes(context -> givePassageBlueprint(context.getSource(),
+                                                        IntegerArgumentType.getInteger(context, "count"),
+                                                        StringArgumentType.getString(context, "name"))))))
                         .then(Commands.argument("duration_ticks", LongArgumentType.longArg(1L))
                                 .executes(context -> giveBlueprint(context.getSource(),
                                         LongArgumentType.getLong(context, "duration_ticks"), "Transit Ticket"))
@@ -33,6 +42,18 @@ public final class TicketCommands {
     }
 
     private static int giveBlueprint(CommandSourceStack source, long durationTicks, String name) {
+        String safeName = normalizeName(name);
+        return giveBlueprint(source, TicketData.createBlueprint(safeName, durationTicks), safeName,
+                TicketData.formatDuration(durationTicks));
+    }
+
+    private static int givePassageBlueprint(CommandSourceStack source, int passages, String name) {
+        String safeName = normalizeName(name);
+        return giveBlueprint(source, TicketData.createPassageBlueprint(safeName, passages), safeName,
+                Component.translatable("command.create_transit_tickets.passages", passages));
+    }
+
+    private static int giveBlueprint(CommandSourceStack source, ItemStack blueprint, String safeName, Object details) {
         ServerPlayer player;
         try {
             player = source.getPlayerOrException();
@@ -40,16 +61,17 @@ public final class TicketCommands {
             return 0;
         }
 
-        String normalizedName = name.strip();
-        if (normalizedName.isEmpty()) normalizedName = "Transit Ticket";
-        final String safeName = normalizedName.length() > 64 ? normalizedName.substring(0, 64) : normalizedName;
-
-        ItemStack blueprint = TicketData.createBlueprint(safeName, durationTicks);
         if (!player.addItem(blueprint)) {
             player.drop(blueprint, false);
         }
         source.sendSuccess(() -> Component.translatable("command.create_transit_tickets.blueprint_created",
-                safeName, TicketData.formatDuration(durationTicks)), false);
+                safeName, details), false);
         return 1;
+    }
+
+    private static String normalizeName(String name) {
+        String normalizedName = name.strip();
+        if (normalizedName.isEmpty()) normalizedName = "Transit Ticket";
+        return normalizedName.length() > 64 ? normalizedName.substring(0, 64) : normalizedName;
     }
 }

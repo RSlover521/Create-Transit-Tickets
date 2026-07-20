@@ -12,6 +12,8 @@ public final class TicketData {
     public static final String ZONE_ID = "zone_id";
     public static final String ISSUED_TIME = "issued_time";
     public static final String VALID_UNTIL = "valid_until";
+    public static final String ALLOWED_PASSAGES = "allowed_passages";
+    public static final String REMAINING_PASSAGES = "remaining_passages";
     public static final long DEFAULT_DURATION_TICKS = 12_000L;
 
     private TicketData() {
@@ -25,6 +27,14 @@ public final class TicketData {
         return blueprint;
     }
 
+    public static ItemStack createPassageBlueprint(String name, int allowedPassages) {
+        ItemStack blueprint = new ItemStack(ModItems.TICKET_BLUEPRINT.get());
+        CompoundTag tag = blueprint.getOrCreateTag();
+        tag.putString(TICKET_NAME, name);
+        tag.putInt(ALLOWED_PASSAGES, Math.max(1, allowedPassages));
+        return blueprint;
+    }
+
     public static ItemStack issueTicket(ItemStack blueprint, long issuedTime) {
         ItemStack ticket = new ItemStack(ModItems.TRANSIT_TICKET.get());
         CompoundTag source = blueprint.getTag();
@@ -34,10 +44,16 @@ public final class TicketData {
         copyString(source, target, ROUTE_ID);
         copyString(source, target, ZONE_ID);
 
-        long duration = getDuration(blueprint);
-        target.putLong(DURATION_TICKS, duration);
         target.putLong(ISSUED_TIME, issuedTime);
-        target.putLong(VALID_UNTIL, saturatingAdd(issuedTime, duration));
+        if (isPassageLimited(blueprint)) {
+            int passages = getAllowedPassages(blueprint);
+            target.putInt(ALLOWED_PASSAGES, passages);
+            target.putInt(REMAINING_PASSAGES, passages);
+        } else {
+            long duration = getDuration(blueprint);
+            target.putLong(DURATION_TICKS, duration);
+            target.putLong(VALID_UNTIL, saturatingAdd(issuedTime, duration));
+        }
         return ticket;
     }
 
@@ -57,7 +73,31 @@ public final class TicketData {
     public static boolean isIssued(ItemStack stack) {
         CompoundTag tag = stack.getTag();
         return tag != null && tag.contains(ISSUED_TIME, Tag.TAG_ANY_NUMERIC)
-                && tag.contains(VALID_UNTIL, Tag.TAG_ANY_NUMERIC);
+                && (tag.contains(VALID_UNTIL, Tag.TAG_ANY_NUMERIC)
+                || tag.contains(REMAINING_PASSAGES, Tag.TAG_ANY_NUMERIC));
+    }
+
+    public static boolean isPassageLimited(ItemStack stack) {
+        CompoundTag tag = stack.getTag();
+        return tag != null && tag.contains(ALLOWED_PASSAGES, Tag.TAG_ANY_NUMERIC);
+    }
+
+    public static int getAllowedPassages(ItemStack stack) {
+        CompoundTag tag = stack.getTag();
+        return tag == null ? 0 : Math.max(0, tag.getInt(ALLOWED_PASSAGES));
+    }
+
+    public static int getRemainingPassages(ItemStack stack) {
+        CompoundTag tag = stack.getTag();
+        return tag == null ? 0 : Math.max(0, tag.getInt(REMAINING_PASSAGES));
+    }
+
+    public static boolean consumePassage(ItemStack stack) {
+        if (!isPassageLimited(stack)) return true;
+        int remaining = getRemainingPassages(stack);
+        if (remaining <= 0) return false;
+        stack.getOrCreateTag().putInt(REMAINING_PASSAGES, remaining - 1);
+        return true;
     }
 
     public static long getIssuedTime(ItemStack stack) {
