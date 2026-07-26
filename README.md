@@ -108,9 +108,8 @@ Examples:
 ## Planned Features
 
 - Create Deployer ticket printing
-- Route-specific and zone-based tickets
 - Configurable default ticket types and allowed durations
-- Optional compatibility with other Create transit and security add-onsS
+- Optional compatibility with other Create transit and security add-ons
 
 Planned features may change as development continues.
 

@@ -23,10 +23,13 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -38,7 +41,7 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
-public final class TicketGateBlock extends Block {
+public final class TicketGateBlock extends BaseEntityBlock {
     public static final BooleanProperty OPEN = BooleanProperty.create("open");
     public static final BooleanProperty PASSAGE_STARTED = BooleanProperty.create("passage_started");
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
@@ -128,8 +131,14 @@ public final class TicketGateBlock extends Block {
             return;
         }
 
+        if (!(level.getBlockEntity(pos) instanceof TicketGateBlockEntity gate)
+                || level.getGameTime() - gate.getOpenedAt() >= OPEN_TIMEOUT_TICKS) {
+            closeGate(state, level, pos);
+            return;
+        }
+
         if (!state.getValue(PASSAGE_STARTED)) {
-            level.setBlock(pos, state.setValue(OPEN, false), Block.UPDATE_ALL);
+            level.scheduleTick(pos, this, PASSAGE_CHECK_TICKS);
             return;
         }
 
@@ -142,9 +151,7 @@ public final class TicketGateBlock extends Block {
         if (playerStillInGate) {
             level.scheduleTick(pos, this, PASSAGE_CHECK_TICKS);
         } else {
-            level.setBlock(pos, state
-                    .setValue(OPEN, false)
-                    .setValue(PASSAGE_STARTED, false), Block.UPDATE_ALL);
+            closeGate(state, level, pos);
         }
     }
 
@@ -157,7 +164,6 @@ public final class TicketGateBlock extends Block {
                 && player.isAlive()
                 && !player.isSpectator()) {
             level.setBlock(pos, state.setValue(PASSAGE_STARTED, true), Block.UPDATE_ALL);
-            level.scheduleTick(pos, this, PASSAGE_CHECK_TICKS);
         }
 
         super.entityInside(state, level, pos, entity);
@@ -171,6 +177,16 @@ public final class TicketGateBlock extends Block {
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return getGateShape(state);
+    }
+
+    @Override
+    public RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
+    }
+
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new TicketGateBlockEntity(pos, state);
     }
 
     @Override
@@ -206,7 +222,16 @@ public final class TicketGateBlock extends Block {
                 .setValue(OPEN, true)
                 .setValue(PASSAGE_STARTED, false);
         level.setBlock(pos, openState, Block.UPDATE_ALL);
-        level.scheduleTick(pos, state.getBlock(), OPEN_TIMEOUT_TICKS);
+        if (level.getBlockEntity(pos) instanceof TicketGateBlockEntity gate) {
+            gate.setOpenedAt(level.getGameTime());
+        }
+        level.scheduleTick(pos, state.getBlock(), PASSAGE_CHECK_TICKS);
+    }
+
+    private static void closeGate(BlockState state, Level level, BlockPos pos) {
+        level.setBlock(pos, state
+                .setValue(OPEN, false)
+                .setValue(PASSAGE_STARTED, false), Block.UPDATE_ALL);
     }
 
     private static void playAcceptedSound(Level level, BlockPos pos) {
