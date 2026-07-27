@@ -1,6 +1,7 @@
 package com.rslover521.createtransittickets;
 
 import com.rslover521.createtransittickets.command.TicketCommands;
+import com.rslover521.createtransittickets.network.ModNetworking;
 import com.rslover521.createtransittickets.registry.ModBlockEntities;
 import com.rslover521.createtransittickets.registry.ModBlocks;
 import com.rslover521.createtransittickets.registry.ModCreativeTabs;
@@ -21,6 +22,7 @@ public final class CreateTransitTickets {
         ModBlockEntities.register(modEventBus);
         ModItems.register(modEventBus);
         ModCreativeTabs.register(modEventBus);
+        ModNetworking.register();
     }
 
     @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)

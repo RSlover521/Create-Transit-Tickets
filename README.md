@@ -108,6 +108,7 @@ Examples:
 ## Planned Features
 
 - Create Deployer ticket printing
+- Configuration menus for ticket blueprints
 - Configurable default ticket types and allowed durations
 - Optional compatibility with other Create transit and security add-ons
 

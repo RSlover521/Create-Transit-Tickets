@@ -2,6 +2,7 @@ package com.rslover521.createtransittickets.item;
 
 import com.rslover521.createtransittickets.registry.ModItems;
 import com.rslover521.createtransittickets.util.TicketData;
+import com.rslover521.createtransittickets.util.TicketTypes;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
@@ -11,6 +12,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -27,7 +30,11 @@ public final class TicketBlueprintItem extends Item {
         ItemStack blank = player.getItemInHand(otherHand);
 
         if (!blank.is(ModItems.BLANK_TICKET.get())) {
-            return InteractionResultHolder.pass(blueprint);
+            if (level.isClientSide) {
+                DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
+                        () -> () -> com.rslover521.createtransittickets.client.ClientHooks.openBlueprintScreen(hand));
+            }
+            return InteractionResultHolder.sidedSuccess(blueprint, level.isClientSide);
         }
 
         if (!level.isClientSide) {
@@ -45,10 +52,18 @@ public final class TicketBlueprintItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
-        if (TicketData.isPassageLimited(stack)) {
+        TicketTypes type = TicketData.getTicketType(stack);
+        tooltip.add(Component.translatable("tooltip.create_transit_tickets.type",
+                Component.translatable("ticket_type.create_transit_tickets." + type.name().toLowerCase(java.util.Locale.ROOT)))
+                .withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.translatable("tooltip.create_transit_tickets.service",
+                Component.translatable("ticket_service.create_transit_tickets."
+                        + TicketData.getTicketService(stack).name().toLowerCase(java.util.Locale.ROOT)))
+                .withStyle(ChatFormatting.GRAY));
+        if (type == TicketTypes.SINGLE_USE || type == TicketTypes.MULTIPLE_USE) {
             tooltip.add(Component.translatable("tooltip.create_transit_tickets.allowed_passages",
                     TicketData.getAllowedPassages(stack)).withStyle(ChatFormatting.GRAY));
-        } else {
+        } else if (type == TicketTypes.LIMITED_TIME) {
             tooltip.add(Component.translatable("tooltip.create_transit_tickets.duration",
                     TicketData.formatDuration(TicketData.getDuration(stack))).withStyle(ChatFormatting.GRAY));
         }

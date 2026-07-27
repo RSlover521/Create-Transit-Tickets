@@ -7,6 +7,8 @@ import net.minecraft.world.item.ItemStack;
 
 public final class TicketData {
     public static final String TICKET_NAME = "ticket_name";
+    public static final String TICKET_TYPE = "ticket_type";
+    public static final String TICKET_SERVICE = "ticket_service";
     public static final String DURATION_TICKS = "duration_ticks";
     public static final String ROUTE_ID = "route_id";
     public static final String ZONE_ID = "zone_id";
@@ -23,6 +25,8 @@ public final class TicketData {
         ItemStack blueprint = new ItemStack(ModItems.TICKET_BLUEPRINT.get());
         CompoundTag tag = blueprint.getOrCreateTag();
         tag.putString(TICKET_NAME, name);
+        tag.putString(TICKET_TYPE, TicketTypes.LIMITED_TIME.name());
+        tag.putString(TICKET_SERVICE, TicketServices.LOCAL.name());
         tag.putLong(DURATION_TICKS, Math.max(1L, durationTicks));
         return blueprint;
     }
@@ -31,6 +35,9 @@ public final class TicketData {
         ItemStack blueprint = new ItemStack(ModItems.TICKET_BLUEPRINT.get());
         CompoundTag tag = blueprint.getOrCreateTag();
         tag.putString(TICKET_NAME, name);
+        tag.putString(TICKET_TYPE, allowedPassages == 1
+                ? TicketTypes.SINGLE_USE.name() : TicketTypes.MULTIPLE_USE.name());
+        tag.putString(TICKET_SERVICE, TicketServices.LOCAL.name());
         tag.putInt(ALLOWED_PASSAGES, Math.max(1, allowedPassages));
         return blueprint;
     }
@@ -41,18 +48,23 @@ public final class TicketData {
         CompoundTag target = ticket.getOrCreateTag();
 
         copyString(source, target, TICKET_NAME);
+        copyString(source, target, TICKET_TYPE);
+        copyString(source, target, TICKET_SERVICE);
         copyString(source, target, ROUTE_ID);
         copyString(source, target, ZONE_ID);
 
         target.putLong(ISSUED_TIME, issuedTime);
-        if (isPassageLimited(blueprint)) {
+        TicketTypes type = getTicketType(blueprint);
+        if (type == TicketTypes.SINGLE_USE || type == TicketTypes.MULTIPLE_USE) {
             int passages = getAllowedPassages(blueprint);
             target.putInt(ALLOWED_PASSAGES, passages);
             target.putInt(REMAINING_PASSAGES, passages);
-        } else {
+        } else if (type == TicketTypes.LIMITED_TIME) {
             long duration = getDuration(blueprint);
             target.putLong(DURATION_TICKS, duration);
             target.putLong(VALID_UNTIL, saturatingAdd(issuedTime, duration));
+        } else {
+            target.putLong(VALID_UNTIL, Long.MAX_VALUE);
         }
         return ticket;
     }
@@ -60,6 +72,77 @@ public final class TicketData {
     public static String getTicketName(ItemStack stack) {
         CompoundTag tag = stack.getTag();
         return tag != null && tag.contains(TICKET_NAME, Tag.TAG_STRING) ? tag.getString(TICKET_NAME) : "";
+    }
+
+    public static TicketTypes getTicketType(ItemStack stack) {
+        CompoundTag tag = stack.getTag();
+        if (tag != null && tag.contains(TICKET_TYPE, Tag.TAG_STRING)) {
+            String value = tag.getString(TICKET_TYPE);
+            if ("UNLIMITED_PASS".equals(value)) return TicketTypes.UNLIMITED_TIME;
+            try {
+                return TicketTypes.valueOf(value);
+            } catch (IllegalArgumentException ignored) {
+            }
+        }
+        return isPassageLimited(stack)
+                ? (getAllowedPassages(stack) == 1 ? TicketTypes.SINGLE_USE : TicketTypes.MULTIPLE_USE)
+                : TicketTypes.LIMITED_TIME;
+    }
+
+    public static TicketServices getTicketService(ItemStack stack) {
+        CompoundTag tag = stack.getTag();
+        if (tag != null && tag.contains(TICKET_SERVICE, Tag.TAG_STRING)) {
+            try {
+                return TicketServices.valueOf(tag.getString(TICKET_SERVICE));
+            } catch (IllegalArgumentException ignored) {
+            }
+        }
+        return TicketServices.LOCAL;
+    }
+
+    public static void configureBlueprint(ItemStack stack, String name, TicketTypes type,
+                                          TicketServices service, long value) {
+        CompoundTag tag = stack.getOrCreateTag();
+        tag.putString(TICKET_NAME, normalizeName(name));
+        tag.putString(TICKET_TYPE, type.name());
+        tag.putString(TICKET_SERVICE, service.name());
+        tag.remove(ALLOWED_PASSAGES);
+        tag.remove(DURATION_TICKS);
+        if (type == TicketTypes.SINGLE_USE) {
+            tag.putInt(ALLOWED_PASSAGES, 1);
+        } else if (type == TicketTypes.MULTIPLE_USE) {
+            tag.putInt(ALLOWED_PASSAGES, (int) Math.max(1L, Math.min(Integer.MAX_VALUE, value)));
+        } else if (type == TicketTypes.LIMITED_TIME) {
+            tag.putLong(DURATION_TICKS, Math.max(1L, value));
+        }
+    }
+
+    public static String normalizeName(String name) {
+        String normalized = name.strip();
+        if (normalized.isEmpty()) normalized = "Transit Ticket";
+        return normalized.length() > 64 ? normalized.substring(0, 64) : normalized;
+    }
+
+    public static long parseDuration(String input) {
+        if (input == null || input.length() < 2) return -1L;
+        String normalized = input.strip().toLowerCase(java.util.Locale.ROOT);
+        if (normalized.length() < 2) return -1L;
+        long multiplier = switch (normalized.charAt(normalized.length() - 1)) {
+            case 't' -> 1L;
+            case 's' -> 20L;
+            case 'm' -> 1_200L;
+            case 'h' -> 72_000L;
+            case 'd' -> 24_000L;
+            default -> -1L;
+        };
+        if (multiplier < 0L) return -1L;
+        try {
+            long amount = Long.parseLong(normalized.substring(0, normalized.length() - 1));
+            if (amount < 1L || amount > Long.MAX_VALUE / multiplier) return -1L;
+            return amount * multiplier;
+        } catch (NumberFormatException ignored) {
+            return -1L;
+        }
     }
 
     public static long getDuration(ItemStack stack) {

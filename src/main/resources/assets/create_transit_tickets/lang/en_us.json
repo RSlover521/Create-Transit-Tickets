@@ -5,6 +5,8 @@
   "item.create_transit_tickets.ticket_blueprint": "Ticket Blueprint",
   "item.create_transit_tickets.transit_ticket": "Transit Ticket",
   "tooltip.create_transit_tickets.duration": "Duration: %s",
+  "tooltip.create_transit_tickets.type": "Type: %s",
+  "tooltip.create_transit_tickets.service": "Service: %s",
   "tooltip.create_transit_tickets.allowed_passages": "Passages: %s",
   "tooltip.create_transit_tickets.passages_remaining": "Passages remaining: %s/%s",
   "tooltip.create_transit_tickets.used_up": "Used Up",
@@ -16,5 +18,17 @@
   "command.create_transit_tickets.blueprint_created": "Created blueprint '%s' (%s)",
   "command.create_transit_tickets.passages": "%s passages",
   "message.create_transit_tickets.ticket_gate.no_ticket": "You are not holding a transit ticket.",
-  "message.create_transit_tickets.ticket_gate.invalid_ticket": "This transit ticket is invalid."
+  "message.create_transit_tickets.ticket_gate.invalid_ticket": "This transit ticket is invalid.",
+  "screen.create_transit_tickets.blueprint.title": "Configure Ticket Blueprint",
+  "screen.create_transit_tickets.blueprint.name": "Ticket Name",
+  "screen.create_transit_tickets.blueprint.type": "Ticket Type",
+  "screen.create_transit_tickets.blueprint.service": "Ticket Service",
+  "screen.create_transit_tickets.blueprint.passages": "Number of Passages",
+  "screen.create_transit_tickets.blueprint.duration": "Duration (for example: 10t, 30s, 5d)",
+  "ticket_type.create_transit_tickets.single_use": "Single Use",
+  "ticket_type.create_transit_tickets.multiple_use": "Multiple Use",
+  "ticket_type.create_transit_tickets.limited_time": "Limited Time",
+  "ticket_type.create_transit_tickets.unlimited_time": "Unlimited Time",
+  "ticket_service.create_transit_tickets.local": "Local",
+  "ticket_service.create_transit_tickets.express": "Express"
 }
