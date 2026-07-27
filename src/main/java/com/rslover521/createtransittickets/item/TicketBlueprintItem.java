@@ -2,6 +2,7 @@ package com.rslover521.createtransittickets.item;
 
 import com.rslover521.createtransittickets.registry.ModItems;
 import com.rslover521.createtransittickets.util.TicketData;
+import com.rslover521.createtransittickets.util.CreateSummaryTooltip;
 import com.rslover521.createtransittickets.util.TicketTypes;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -52,6 +53,7 @@ public final class TicketBlueprintItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+        CreateSummaryTooltip.append(this, tooltip);
         TicketTypes type = TicketData.getTicketType(stack);
         tooltip.add(Component.translatable("tooltip.create_transit_tickets.type",
                 Component.translatable("ticket_type.create_transit_tickets." + type.name().toLowerCase(java.util.Locale.ROOT)))

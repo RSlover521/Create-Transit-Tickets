@@ -1,11 +1,14 @@
 package com.rslover521.createtransittickets.customBlocks;
 
+import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.rslover521.createtransittickets.registry.ModItems;
+import com.rslover521.createtransittickets.util.GateServiceRequirement;
 import com.rslover521.createtransittickets.util.TicketData;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.protocol.game.ClientboundSetSubtitleTextPacket;
 import net.minecraft.network.protocol.game.ClientboundSetTitleTextPacket;
 import net.minecraft.network.protocol.game.ClientboundSetTitlesAnimationPacket;
@@ -20,6 +23,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -40,14 +44,19 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.registries.ForgeRegistries;
 
-public final class TicketGateBlock extends BaseEntityBlock {
+public final class TicketGateBlock extends BaseEntityBlock implements IWrenchable {
     public static final BooleanProperty OPEN = BooleanProperty.create("open");
     public static final BooleanProperty PASSAGE_STARTED = BooleanProperty.create("passage_started");
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
     private static final int OPEN_TIMEOUT_TICKS = 100;
     private static final int PASSAGE_CHECK_TICKS = 1;
+    private static final ResourceLocation CREATE_WRENCH_ID =
+            ResourceLocation.fromNamespaceAndPath("create", "wrench");
     private static final VoxelShape CLOSED_NORTH_SOUTH_SHAPE = Shapes.or(
             Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 2.0D),
             Block.box(0.0D, 0.0D, 14.0D, 16.0D, 16.0D, 16.0D),
@@ -100,6 +109,10 @@ public final class TicketGateBlock extends BaseEntityBlock {
                                  InteractionHand hand, BlockHitResult hit) {
         ItemStack heldStack = player.getItemInHand(hand);
 
+        if (isCreateWrench(heldStack)) {
+            return openWrenchConfiguration(level, pos, player);
+        }
+
         if (heldStack.isEmpty()) {
             if (!level.isClientSide) {
                 playDeniedSound(level, pos);
@@ -116,12 +129,53 @@ public final class TicketGateBlock extends BaseEntityBlock {
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
 
+        GateServiceRequirement requirement = level.getBlockEntity(pos) instanceof TicketGateBlockEntity gate
+                ? gate.getRequiredService() : GateServiceRequirement.ANY;
+        if (!requirement.matches(heldStack)) {
+            if (!level.isClientSide) {
+                playDeniedSound(level, pos);
+                showError(player, Component.translatable(
+                        "message.create_transit_tickets.ticket_gate.wrong_service"));
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+
         if (!level.isClientSide) {
             TicketData.consumePassage(heldStack);
             playAcceptedSound(level, pos);
             openGate(state, level, pos);
         }
 
+        return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
+    @Override
+    public InteractionResult onWrenched(BlockState state, UseOnContext context) {
+        Player player = context.getPlayer();
+        return player == null ? InteractionResult.PASS
+                : openWrenchConfiguration(context.getLevel(), context.getClickedPos(), player);
+    }
+
+    @Override
+    public InteractionResult onSneakWrenched(BlockState state, UseOnContext context) {
+        Player player = context.getPlayer();
+        if (player == null) return InteractionResult.PASS;
+        Level level = context.getLevel();
+        BlockPos pos = context.getClickedPos();
+        if (!player.hasPermissions(2)) {
+            if (!level.isClientSide) {
+                playDeniedSound(level, pos);
+                showError(player, Component.translatable(
+                        "message.create_transit_tickets.ticket_gate.operator_only"));
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+
+        if (!level.isClientSide) {
+            Block.popResource(level, pos, new ItemStack(ModItems.TICKET_GATE.get()));
+            level.removeBlock(pos, false);
+            playRemoveSound(level, pos);
+        }
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
@@ -215,6 +269,27 @@ public final class TicketGateBlock extends BaseEntityBlock {
                 && (TicketData.isPassageLimited(stack)
                 ? TicketData.getRemainingPassages(stack) > 0
                 : TicketData.getValidUntil(stack) > level.getGameTime());
+    }
+
+    public static boolean isCreateWrench(ItemStack stack) {
+        return stack.getItem() == ForgeRegistries.ITEMS.getValue(CREATE_WRENCH_ID);
+    }
+
+    private static InteractionResult openWrenchConfiguration(Level level, BlockPos pos, Player player) {
+        if (!player.hasPermissions(2)) {
+            if (!level.isClientSide) {
+                playDeniedSound(level, pos);
+                showError(player, Component.translatable(
+                        "message.create_transit_tickets.ticket_gate.operator_only"));
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+        if (level.isClientSide) {
+            DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
+                    () -> () -> com.rslover521.createtransittickets.client.ClientHooks
+                            .openTicketGateScreen(pos));
+        }
+        return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
     private static void openGate(BlockState state, Level level, BlockPos pos) {

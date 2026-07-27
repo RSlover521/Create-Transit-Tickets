@@ -10,12 +10,14 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.CycleButton;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.Locale;
+import java.util.List;
 
 public final class TicketBlueprintScreen extends Screen {
     private static final int WIDTH = 220;
@@ -127,6 +129,21 @@ public final class TicketBlueprintScreen extends Screen {
         renderBackground(graphics);
         super.render(graphics, mouseX, mouseY, partialTick);
         graphics.drawCenteredString(font, title, width / 2, height / 2 - 100, 0xFFFFFF);
+        if (ticketType == TicketTypes.LIMITED_TIME && valueBox != null && valueBox.isHovered()) {
+            graphics.renderComponentTooltip(font, List.of(
+                    Component.translatable("screen.create_transit_tickets.blueprint.duration_tooltip.header")
+                            .withStyle(ChatFormatting.YELLOW),
+                    Component.translatable("screen.create_transit_tickets.blueprint.duration_tooltip.t"),
+                    Component.translatable("screen.create_transit_tickets.blueprint.duration_tooltip.s"),
+                    Component.translatable("screen.create_transit_tickets.blueprint.duration_tooltip.m"),
+                    Component.translatable("screen.create_transit_tickets.blueprint.duration_tooltip.h"),
+                    Component.translatable("screen.create_transit_tickets.blueprint.duration_tooltip.d")
+            ), mouseX, mouseY);
+        } else if (ticketType == TicketTypes.MULTIPLE_USE && valueBox != null && valueBox.isHovered()) {
+            graphics.renderTooltip(font,
+                    Component.translatable("screen.create_transit_tickets.blueprint.passages_tooltip"),
+                    mouseX, mouseY);
+        }
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.rslover521.createtransittickets.item;
 
 import com.rslover521.createtransittickets.util.TicketData;
+import com.rslover521.createtransittickets.util.CreateSummaryTooltip;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
@@ -24,6 +25,7 @@ public final class TransitTicketItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+        CreateSummaryTooltip.append(this, tooltip);
         if (!TicketData.isIssued(stack)) {
             tooltip.add(Component.translatable("tooltip.create_transit_tickets.unissued")
                     .withStyle(ChatFormatting.YELLOW));

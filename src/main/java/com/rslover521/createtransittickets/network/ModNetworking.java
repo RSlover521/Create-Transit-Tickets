@@ -19,5 +19,9 @@ public final class ModNetworking {
                 ConfigureBlueprintPacket::encode,
                 ConfigureBlueprintPacket::decode,
                 ConfigureBlueprintPacket::handle);
+        CHANNEL.registerMessage(1, ConfigureTicketGatePacket.class,
+                ConfigureTicketGatePacket::encode,
+                ConfigureTicketGatePacket::decode,
+                ConfigureTicketGatePacket::handle);
     }
 }

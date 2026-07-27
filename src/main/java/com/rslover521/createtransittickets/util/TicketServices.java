@@ -1,5 +1,5 @@
 package com.rslover521.createtransittickets.util;
 
 public enum TicketServices {
-    LOCAL, EXPRESS;
+    LOCAL, SEMI_FAST, EXPRESS;
 }
