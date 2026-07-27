@@ -1,8 +1,8 @@
-# Create: Transit Tickets
+# 🎟️ Create: Transit Tickets 🚂
 
 ![Create: Transit Tickets mod icon](https://raw.githubusercontent.com/RSlover521/Create-Transit-Tickets/main/src/main/resources/create_transit_tickets.png)
 
-Survival-friendly, configurable transit tickets and ticket gates for Create train networks.
+> 🚉 Survival-friendly, configurable transit tickets and ticket gates for Create train networks.
 
 [![GitHub Repository](https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github&color=darkcyan)](https://github.com/RSlover521/Create-Transit-Tickets)
 [![Latest Release](https://img.shields.io/github/v/release/RSlover521/Create-Transit-Tickets?style=for-the-badge&logo=github&color=lime)](https://github.com/RSlover521/Create-Transit-Tickets/releases)
@@ -13,16 +13,16 @@ Survival-friendly, configurable transit tickets and ticket gates for Create trai
 
 ---
 
-## About
+## 🚆 About
 
 Create: Transit Tickets adds reusable ticket blueprints, issued transit tickets, and working ticket gates for public transportation systems built with the **Create** mod.
 
 Ticket blueprints are configured through an in-game menu—commands are no longer required for normal use. A blueprint stores a custom name, usage type, and transit service.
 
-- **Single Use** tickets allow one gate passage.
-- **Multiple Use** tickets allow a configurable number of passages.
-- **Limited Time** tickets remain valid for a configurable duration.
-- **Unlimited Time** tickets never expire.
+- 🎫 **Single Use** tickets allow one gate passage.
+- 🔢 **Multiple Use** tickets allow a configurable number of passages.
+- ⏳ **Limited Time** tickets remain valid for a configurable duration.
+- ♾️ **Unlimited Time** tickets never expire.
 
 Tickets can use the **Local**, **Semi-Fast**, or **Express** service. Operators can configure each gate to accept any service or require one specific service.
 
@@ -30,22 +30,24 @@ The Blank Ticket, Ticket Blueprint, Transit Ticket, and Ticket Gate use Create-s
 
 ---
 
-## Current Version Highlights
+## ✨ Current Version Highlights
 
 The current `0.1.1-beta` development version includes:
 
-- An in-game Ticket Blueprint configuration menu with name, type, service, passage, and duration controls.
-- Single Use, Multiple Use, Limited Time, and Unlimited Time ticket types.
-- Local, Semi-Fast, and Express ticket services.
-- Per-gate service requirements configured by operators with Create's Wrench.
-- Operator-only wrench dismantling that returns the Ticket Gate item.
-- Gates that close after a player passes through or after a hard five-second timeout.
-- Server-validated configuration packets for blueprints and gates.
-- Create-style Shift summaries for every ticket item and the Ticket Gate.
+- 📝 An in-game Ticket Blueprint configuration menu with name, type, service, passage, and duration controls.
+- 🎫 Single Use, Multiple Use, Limited Time, and Unlimited Time ticket types.
+- 🚉 Local, Semi-Fast, and Express ticket services.
+- 🔧 Per-gate service requirements configured by operators with Create's Wrench.
+- 📦 Operator-only wrench dismantling that returns the Ticket Gate item.
+- 🚶 Gates that close after a player passes through or after a hard five-second timeout.
+- 🛡️ Server-validated configuration packets for blueprints and gates.
+- 📖 Create-style Shift summaries for every ticket item and the Ticket Gate.
 
 ---
 
-## Ticket Workflow
+## 🎫 Ticket Workflow
+
+> 📄 **Blank Ticket** → 📝 **Ticket Blueprint** → 🎟️ **Transit Ticket** → 🚧 **Ticket Gate**
 
 1. Craft a **Blank Ticket**.
 2. Craft a **Ticket Blueprint**.
@@ -55,14 +57,14 @@ The current `0.1.1-beta` development version includes:
 6. Use the blueprint to issue a **Transit Ticket**. One blank ticket is consumed in Survival mode; the blueprint is reusable.
 7. Hold the issued ticket and use it on a compatible **Ticket Gate** to enter.
 
-### Blank Ticket
+### 📄 Blank Ticket
 
 - The material consumed when a ticket is issued.
 - Contains no validity or expiration data by itself.
 - Two sheets of paper craft four blank tickets.
 - Hold Shift while hovering to display its Create-style summary.
 
-### Ticket Blueprint
+### 📝 Ticket Blueprint
 
 - A reusable template that issues tickets.
 - Right-click it without a Blank Ticket in the other hand to open its configuration menu.
@@ -74,7 +76,7 @@ The current `0.1.1-beta` development version includes:
 - **Single Use** and **Unlimited Time** require no additional value.
 - Hold Shift while hovering to display its Create-style summary and usage instructions.
 
-### Transit Ticket
+### 🎟️ Transit Ticket
 
 - Uses the name configured on its blueprint.
 - Retains the type and service configured on its blueprint.
@@ -86,13 +88,13 @@ The current `0.1.1-beta` development version includes:
 
 ---
 
-## Blueprint Commands (Optional)
+## 💻 Blueprint Commands (Optional)
 
 The in-game blueprint menu is the recommended configuration method. Legacy helper commands remain available to Creative players and command sources with permission level 2 or higher.
 
 > Command-created blueprints use the Local service and cover the legacy limited-time and passage-limited formats. Use the in-game menu for all four ticket types and all service choices.
 
-### Time-limited tickets
+### ⏳ Time-limited tickets
 
 ```text
 /transittickets blueprint <duration_ticks> [name]
@@ -108,7 +110,7 @@ For example, a 30-minute ticket lasts 36,000 ticks:
 
 Minecraft normally runs at 20 ticks per second. Ticket time advances with the world's game time and pauses when the world is not running.
 
-### Passage-limited tickets
+### 🔢 Passage-limited tickets
 
 ```text
 /transittickets blueprint passages <count> [name]
@@ -125,7 +127,7 @@ Examples:
 
 ---
 
-## Ticket Gate Behavior
+## 🚧 Ticket Gate Behavior
 
 - Use the gate while holding an issued, valid **Transit Ticket**.
 - Gates accept **Any Service** by default.
@@ -143,17 +145,16 @@ Examples:
 
 ---
 
-## Planned Features
+## 🔮 Planned Features
 
 - Create Deployer ticket printing
-- Configurable default ticket types and allowed durations
 - Optional compatibility with other Create transit and security add-ons
 
 Planned features may change as development continues.
 
 ---
 
-## Available Languages
+## 🌐 Available Languages
 
 - English (US)
 
@@ -161,7 +162,7 @@ Translations are welcome through pull requests.
 
 ---
 
-## Installation
+## 📦 Installation
 
 1. Install **Minecraft 1.20.1**.
 2. Install **Minecraft Forge 47.x**. The development environment currently uses Forge **47.4.0**.
@@ -174,7 +175,7 @@ Translations are welcome through pull requests.
 
 ---
 
-## Building from Source
+## 🛠️ Building from Source
 
 Requirements:
 
@@ -205,7 +206,7 @@ To launch the Forge development client:
 
 ---
 
-## Links
+## 🔗 Links
 
 - [Repository](https://github.com/RSlover521/Create-Transit-Tickets)
 - [Releases](https://github.com/RSlover521/Create-Transit-Tickets/releases)
@@ -216,18 +217,19 @@ To launch the Forge development client:
 
 ---
 
-## Supported Mod Versions
+## ✅ Supported Mod Versions
 
-| Version | Minecraft | Forge | Create | Supported |
-|---|---|---|---|:---:|
-| **0.1.1-beta (current)** | 1.20.1 | 47.x | 0.5.1.f | Yes |
-| 0.1.0-beta | 1.20.1 | 47.x | 0.5.1.f | Yes |
+| Version               | Minecraft | Forge  | Create   | Supported |
+|-----------------------|-----------|--------|----------|:---------:|
+| 0.1.2-beta (current)  | 1.20.1    | 47.x   | 0.5.1+   |    Yes    | 
+| 0.1.1-beta            | 1.20.1    | 47.x   | 0.5.1.f  |    Yes    |
+| 0.1.0-beta            | 1.20.1    | 47.x   | 0.5.1.f  |    Yes    |
 
 > This project is currently in beta, so features and saved item data may change between releases. Please confirm that you are using a supported version before opening an issue.
 
 ---
 
-## License
+## 📜 License
 
 - MIT License — see the [project license](https://github.com/RSlover521/Create-Transit-Tickets/blob/main/LICENSE) for details.
 - Minecraft, Minecraft Forge, and Create belong to their respective owners.
