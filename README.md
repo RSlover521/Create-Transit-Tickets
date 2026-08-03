@@ -148,6 +148,7 @@ Examples:
 ## 🔮 Planned Features
 
 - Create Deployer ticket printing
+- Add ponders (somehow)
 - Create 6.0 port
 - Optional compatibility with other Create transit and security add-ons
 

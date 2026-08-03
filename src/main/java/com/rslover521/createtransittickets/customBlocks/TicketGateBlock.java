@@ -174,7 +174,7 @@ public final class TicketGateBlock extends BaseEntityBlock implements IWrenchabl
         if (!level.isClientSide) {
             Block.popResource(level, pos, new ItemStack(ModItems.TICKET_GATE.get()));
             level.removeBlock(pos, false);
-            playRemoveSound(level, pos);
+            IWrenchable.playRemoveSound(level, pos);
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
     }

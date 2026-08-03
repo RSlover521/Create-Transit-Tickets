@@ -8,7 +8,7 @@ import net.minecraftforge.network.simple.SimpleChannel;
 public final class ModNetworking {
     private static final String VERSION = "1";
     public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
-            new ResourceLocation(CreateTransitTickets.MOD_ID, "main"),
+            ResourceLocation.fromNamespaceAndPath(CreateTransitTickets.MOD_ID, "main"),
             () -> VERSION, VERSION::equals, VERSION::equals);
 
     private ModNetworking() {
