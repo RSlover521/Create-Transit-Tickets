@@ -32,7 +32,7 @@ The Blank Ticket, Ticket Blueprint, Transit Ticket, and Ticket Gate use Create-s
 
 ## ✨ Current Version Highlights
 
-The current `0.1.1-beta` development version includes:
+The current `0.1.2-beta` development version includes:
 
 - 📝 An in-game Ticket Blueprint configuration menu with name, type, service, passage, and duration controls.
 - 🎫 Single Use, Multiple Use, Limited Time, and Unlimited Time ticket types.
@@ -148,6 +148,7 @@ Examples:
 ## 🔮 Planned Features
 
 - Create Deployer ticket printing
+- Create 6.0 port
 - Optional compatibility with other Create transit and security add-ons
 
 Planned features may change as development continues.
