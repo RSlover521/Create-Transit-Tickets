@@ -32,8 +32,9 @@ The Blank Ticket, Ticket Blueprint, Transit Ticket, and Ticket Gate use Create-s
 
 ## ✨ Current Version Highlights
 
-The current `0.1.2-beta` development version includes:
+The current `0.1.3-beta` release includes:
 
+- 🚂 Support for **Create 6.0.8** on Minecraft 1.20.1.
 - 📝 An in-game Ticket Blueprint configuration menu with name, type, service, passage, and duration controls.
 - 🎫 Single Use, Multiple Use, Limited Time, and Unlimited Time ticket types.
 - 🚉 Local, Semi-Fast, and Express ticket services.
@@ -149,7 +150,6 @@ Examples:
 
 - Create Deployer ticket printing
 - Add ponders (somehow)
-- Create 6.0 port
 - Optional compatibility with other Create transit and security add-ons
 
 Planned features may change as development continues.
@@ -168,12 +168,12 @@ Translations are welcome through pull requests.
 
 1. Install **Minecraft 1.20.1**.
 2. Install **Minecraft Forge 47.x**. The development environment currently uses Forge **47.4.0**.
-3. Install **[Create 0.5.1.f](https://modrinth.com/mod/create/version/HNYrbfZZ)** for Minecraft 1.20.1.
+3. Install **[Create 6.0.8](https://modrinth.com/mod/create/version/mc1.20.1-6.0.8)** for Minecraft 1.20.1 and any dependencies required by that release.
 4. Download Create: Transit Tickets from the [GitHub Releases](https://github.com/RSlover521/Create-Transit-Tickets/releases) page.
 5. Place both Create and Create: Transit Tickets in the Minecraft `mods` folder.
 6. Launch Minecraft with the Forge profile.
 
-> Create 0.5.1.f includes its required Flywheel and Registrate components in the distributed mod jar.
+> Create: Transit Tickets 0.1.3-beta requires Create 6.0.8 and is not compatible with the older Create 0.5.1 line.
 
 ---
 
@@ -215,17 +215,18 @@ To launch the Forge development client:
 - [Report an Issue](https://github.com/RSlover521/Create-Transit-Tickets/issues)
 - [Discussions](https://github.com/RSlover521/Create-Transit-Tickets/discussions)
 - [Minecraft Forge](https://files.minecraftforge.net/net/minecraftforge/forge/index_1.20.1.html)
-- [Create 0.5.1.f](https://modrinth.com/mod/create/version/HNYrbfZZ)
+- [Create 6.0.8](https://modrinth.com/mod/create/version/mc1.20.1-6.0.8)
 
 ---
 
 ## ✅ Supported Mod Versions
 
-| Version               | Minecraft | Forge  | Create   | Supported |
-|-----------------------|-----------|--------|----------|:---------:|
-| 0.1.2-beta (current)  | 1.20.1    | 47.x   | 0.5.1+   |    Yes    | 
-| 0.1.1-beta            | 1.20.1    | 47.x   | 0.5.1.f  |    Yes    |
-| 0.1.0-beta            | 1.20.1    | 47.x   | 0.5.1.f  |    Yes    |
+| Version               | Minecraft | Forge | Create  | Supported |
+|-----------------------|-----------|-------|---------|:---------:|
+| 0.1.3-beta (current)  | 1.20.1    | 47.x  | 6.0.8   |    Yes    |
+| 0.1.2-beta            | 1.20.1    | 47.x  | 0.5.1.f |  Legacy   |
+| 0.1.1-beta            | 1.20.1    | 47.x  | 0.5.1.f |  Legacy   |
+| 0.1.0-beta            | 1.20.1    | 47.x  | 0.5.1.f |  Legacy   |
 
 > This project is currently in beta, so features and saved item data may change between releases. Please confirm that you are using a supported version before opening an issue.
 
