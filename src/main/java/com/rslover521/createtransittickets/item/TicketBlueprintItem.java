@@ -1,6 +1,5 @@
 package com.rslover521.createtransittickets.item;
 
-import com.rslover521.createtransittickets.registry.ModItems;
 import com.rslover521.createtransittickets.util.TicketData;
 import com.rslover521.createtransittickets.util.CreateSummaryTooltip;
 import com.rslover521.createtransittickets.util.TicketTypes;
@@ -27,27 +26,10 @@ public final class TicketBlueprintItem extends Item {
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack blueprint = player.getItemInHand(hand);
-        InteractionHand otherHand = hand == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND;
-        ItemStack blank = player.getItemInHand(otherHand);
-
-        if (!blank.is(ModItems.BLANK_TICKET.get())) {
-            if (level.isClientSide) {
-                DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
-                        () -> () -> com.rslover521.createtransittickets.client.ClientHooks.openBlueprintScreen(hand));
-            }
-            return InteractionResultHolder.sidedSuccess(blueprint, level.isClientSide);
+        if (level.isClientSide) {
+            DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
+                    () -> () -> com.rslover521.createtransittickets.client.ClientHooks.openBlueprintScreen(hand));
         }
-
-        if (!level.isClientSide) {
-            ItemStack ticket = TicketData.issueTicket(blueprint, level.getGameTime());
-            if (!player.getAbilities().instabuild) {
-                blank.shrink(1);
-            }
-            if (!player.addItem(ticket)) {
-                player.drop(ticket, false);
-            }
-        }
-
         return InteractionResultHolder.sidedSuccess(blueprint, level.isClientSide);
     }
 
@@ -69,7 +51,5 @@ public final class TicketBlueprintItem extends Item {
             tooltip.add(Component.translatable("tooltip.create_transit_tickets.duration",
                     TicketData.formatDuration(TicketData.getDuration(stack))).withStyle(ChatFormatting.GRAY));
         }
-        tooltip.add(Component.translatable("tooltip.create_transit_tickets.blueprint_usage")
-                .withStyle(ChatFormatting.DARK_GRAY));
     }
 }

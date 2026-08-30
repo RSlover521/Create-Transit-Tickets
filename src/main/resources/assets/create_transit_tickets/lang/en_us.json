@@ -3,6 +3,7 @@
   "block.create_transit_tickets.ticket_gate": "Ticket Gate",
   "item.create_transit_tickets.blank_ticket": "Blank Ticket",
   "item.create_transit_tickets.ticket_blueprint": "Ticket Blueprint",
+  "item.create_transit_tickets.incomplete_transit_ticket": "Incomplete Transit Ticket",
   "item.create_transit_tickets.transit_ticket": "Transit Ticket",
   "tooltip.create_transit_tickets.duration": "Duration: %s",
   "tooltip.create_transit_tickets.type": "Type: %s",
@@ -10,7 +11,6 @@
   "tooltip.create_transit_tickets.allowed_passages": "Passages: %s",
   "tooltip.create_transit_tickets.passages_remaining": "Passages remaining: %s/%s",
   "tooltip.create_transit_tickets.used_up": "Used Up",
-  "tooltip.create_transit_tickets.blueprint_usage": "Use with a Blank Ticket in the other hand",
   "tooltip.create_transit_tickets.unissued": "Unissued",
   "tooltip.create_transit_tickets.valid": "Valid",
   "tooltip.create_transit_tickets.remaining": "Remaining: %s",
@@ -55,12 +55,12 @@
   "item.create_transit_tickets.ticket_blueprint.tooltip.summary": "Stores reusable settings for issuing _Transit Tickets_, including their name, usage type, and service.",
   "item.create_transit_tickets.ticket_blueprint.tooltip.condition1": "When Right-clicked",
   "item.create_transit_tickets.ticket_blueprint.tooltip.behaviour1": "Opens the _configuration menu_ for this blueprint.",
-  "item.create_transit_tickets.ticket_blueprint.tooltip.condition2": "When used with a Blank Ticket",
-  "item.create_transit_tickets.ticket_blueprint.tooltip.behaviour2": "Issues a new _Transit Ticket_ using the stored settings.",
+  "item.create_transit_tickets.ticket_blueprint.tooltip.condition2": "When Deployed onto a Blank Ticket",
+  "item.create_transit_tickets.ticket_blueprint.tooltip.behaviour2": "Creates an _Incomplete Transit Ticket_ without consuming the blueprint.",
   "item.create_transit_tickets.transit_ticket.tooltip.summary": "An issued fare used to open compatible _Ticket Gates_. Its validity, passages, and service come from its _Ticket Blueprint_.",
   "item.create_transit_tickets.transit_ticket.tooltip.condition1": "When used on an accepting Ticket Gate",
   "item.create_transit_tickets.transit_ticket.tooltip.behaviour1": "Validates the ticket and _opens_ the gate. Passage-limited tickets consume one use.",
   "item.create_transit_tickets.blank_ticket.tooltip.summary": "An unissued ticket ready to receive the settings stored in a _Ticket Blueprint_.",
-  "item.create_transit_tickets.blank_ticket.tooltip.condition1": "When held with a Ticket Blueprint",
-  "item.create_transit_tickets.blank_ticket.tooltip.behaviour1": "Use the _Ticket Blueprint_ to turn one Blank Ticket into an issued _Transit Ticket_."
+  "item.create_transit_tickets.blank_ticket.tooltip.condition1": "When a Ticket Blueprint is Deployed onto it",
+  "item.create_transit_tickets.blank_ticket.tooltip.behaviour1": "Turns into an _Incomplete Transit Ticket_, ready to be finished with a _Mechanical Press_."
 }

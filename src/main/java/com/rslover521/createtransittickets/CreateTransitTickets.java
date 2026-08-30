@@ -6,6 +6,7 @@ import com.rslover521.createtransittickets.registry.ModBlockEntities;
 import com.rslover521.createtransittickets.registry.ModBlocks;
 import com.rslover521.createtransittickets.registry.ModCreativeTabs;
 import com.rslover521.createtransittickets.registry.ModItems;
+import com.rslover521.createtransittickets.registry.ModRecipeSerializers;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -21,6 +22,7 @@ public final class CreateTransitTickets {
         ModBlocks.register(modEventBus);
         ModBlockEntities.register(modEventBus);
         ModItems.register(modEventBus);
+        ModRecipeSerializers.register(modEventBus);
         ModCreativeTabs.register(modEventBus);
         ModNetworking.register();
     }

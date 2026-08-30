@@ -42,6 +42,15 @@ public final class TicketData {
         return blueprint;
     }
 
+    public static ItemStack createIncompleteTicket(ItemStack blueprint) {
+        ItemStack incompleteTicket = new ItemStack(ModItems.INCOMPLETE_TRANSIT_TICKET.get());
+        CompoundTag source = blueprint.getTag();
+        if (source != null) {
+            incompleteTicket.setTag(source.copy());
+        }
+        return incompleteTicket;
+    }
+
     public static ItemStack issueTicket(ItemStack blueprint, long issuedTime) {
         ItemStack ticket = new ItemStack(ModItems.TRANSIT_TICKET.get());
         CompoundTag source = blueprint.getTag();

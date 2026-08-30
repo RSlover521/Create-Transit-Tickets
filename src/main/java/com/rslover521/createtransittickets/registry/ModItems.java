@@ -19,6 +19,8 @@ public final class ModItems {
             () -> new BlankTicketItem(new Item.Properties()));
     public static final RegistryObject<Item> TICKET_BLUEPRINT = ITEMS.register("ticket_blueprint",
             () -> new TicketBlueprintItem(new Item.Properties().stacksTo(1)));
+    public static final RegistryObject<Item> INCOMPLETE_TRANSIT_TICKET = ITEMS.register("incomplete_transit_ticket",
+            () -> new Item(new Item.Properties().stacksTo(16)));
     public static final RegistryObject<Item> TRANSIT_TICKET = ITEMS.register("transit_ticket",
             () -> new TransitTicketItem(new Item.Properties().stacksTo(16)));
     public static final RegistryObject<Item> TICKET_GATE = ITEMS.register("ticket_gate",
