@@ -1,7 +1,5 @@
 # Create: Transit Tickets Changelog
 
-## Unreleased
-
 ### Ticket production
 
 - Replaced direct ticket issuance from a Ticket Blueprint and an offhand Blank Ticket with a two-stage Create machinery workflow.

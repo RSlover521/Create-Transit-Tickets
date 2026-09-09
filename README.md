@@ -24,7 +24,7 @@ Ticket blueprints are configured through an in-game menu—commands are no longe
 
 Tickets can use the **Local**, **Semi-Fast**, or **Express** service. Operators can configure each gate to accept any service or require one specific service.
 
-The Blank Ticket, Ticket Blueprint, Transit Ticket, and Ticket Gate use Create-style tooltips. Hold Shift while hovering to see their summaries and usage instructions.
+The Blank Ticket, Ticket Blueprint, Transit Ticket, and Ticket Gate use Create-style tooltips. Hold Shift while hovering to see their summaries and usage instructions. Incomplete Transit Tickets display their recipe progress and next required machine directly in the tooltip.
 
 ---
 
@@ -40,33 +40,42 @@ The current `0.1.3-beta` release includes:
 - 📦 Operator-only wrench dismantling that returns the Ticket Gate item.
 - 🚶 Gates that close after a player passes through or after a hard five-second timeout.
 - 🛡️ Server-validated configuration packets for blueprints and gates.
-- 📖 Create-style Shift summaries for every ticket item and the Ticket Gate.
+- 📖 Create-style Shift summaries for the Blank Ticket, Ticket Blueprint, Transit Ticket, and Ticket Gate.
+- ⚙️ Two-stage ticket production using a Deployer followed by a Mechanical Press.
+- 🟨 An Incomplete Transit Ticket that preserves blueprint data and shows recipe progress `1/2`.
 
 ---
 
 ## 🎫 Ticket Workflow
 
-> 📄 **Blank Ticket** → 📝 **Ticket Blueprint** → 🎟️ **Transit Ticket** → 🚧 **Ticket Gate**
+> 📄 **Blank Ticket** + 📝 **Ticket Blueprint** → ⚙️ **Deployer** → 🟨 **Incomplete Transit Ticket** → 🔨 **Mechanical Press** → 🎟️ **Valid Transit Ticket** → 🚧 **Ticket Gate**
 
-1. Craft a **Blank Ticket**.
-2. Craft a **Ticket Blueprint**.
-3. Hold and use the blueprint without a blank ticket to open its configuration menu.
-4. Choose its name, ticket type, and service, then select **Done**.
-5. Hold the configured blueprint and a blank ticket in opposite hands.
-6. Use the blueprint to issue a **Transit Ticket**. One blank ticket is consumed in Survival mode; the blueprint is reusable.
-7. Hold the issued ticket and use it on a compatible **Ticket Gate** to enter.
+### ⚙️ Creating a Valid Ticket with Create Machinery
+
+1. Craft a **Blank Ticket** and a **Ticket Blueprint**.
+2. Hold the Ticket Blueprint and right-click to open its configuration menu.
+3. Choose the ticket name, type, service, and any required duration or passage count, then select **Done**.
+4. Put the configured Ticket Blueprint into the hand of a powered **Deployer** positioned over a belt, depot, or other valid processing surface.
+5. Send a Blank Ticket underneath the Deployer. The Deployer applies the blueprint and produces an **Incomplete Transit Ticket** without consuming the reusable blueprint.
+6. Send the Incomplete Transit Ticket beneath a powered **Mechanical Press**.
+7. The press produces an issued **Transit Ticket** containing the blueprint's configured name, type, service, and validity data.
+8. Hold the finished ticket and use it on a compatible **Ticket Gate**.
+
+The Transit Ticket becomes valid when the Mechanical Press finishes. A Limited Time ticket's validity period begins at that moment—not when the blueprint is deployed. Removing the intermediate item before pressing leaves it incomplete and unable to open a Ticket Gate.
+
+> Incomplete Transit Tickets created before blueprint-data transfer was added do not contain the required settings. Deploy a new Blank Ticket after updating if an older intermediate produces an invalid ticket.
 
 ### 📄 Blank Ticket
 
-- The material consumed when a ticket is issued.
+- The material consumed when a Ticket Blueprint is deployed onto it.
 - Contains no validity or expiration data by itself.
 - Two sheets of paper craft four blank tickets.
 - Hold Shift while hovering to display its Create-style summary.
 
 ### 📝 Ticket Blueprint
 
-- A reusable template that issues tickets.
-- Right-click it without a Blank Ticket in the other hand to open its configuration menu.
+- A reusable template applied to Blank Tickets by a Deployer.
+- Right-click it to open its configuration menu.
 - Stores the ticket name, usage type, service, and any required passage or duration value.
 - The service selector supports **Local**, **Semi-Fast**, and **Express**.
 - **Multiple Use** displays a passage-count field.
@@ -74,6 +83,16 @@ The current `0.1.3-beta` release includes:
 - One second equals 20 ticks, and one Minecraft day equals 24,000 ticks.
 - **Single Use** and **Unlimited Time** require no additional value.
 - Hold Shift while hovering to display its Create-style summary and usage instructions.
+
+### 🟨 Incomplete Transit Ticket
+
+- Produced when a Deployer applies a configured Ticket Blueprint to a Blank Ticket.
+- Stores a copy of the blueprint's NBT settings while moving between machines.
+- Is not issued and cannot open a Ticket Gate.
+- Displays a half-filled progress bar representing step `1/2`.
+- Shows **Recipe Sequence**, **Progress: 1/2**, and **Next: Process in Press** in its tooltip.
+- Must be processed by a Mechanical Press to become a valid Transit Ticket.
+- Uses a damaged, Create-styled version of the completed ticket texture.
 
 ### 🎟️ Transit Ticket
 
@@ -146,8 +165,8 @@ Examples:
 
 ## 🔮 Planned Features
 
-- Create Deployer ticket printing
 - Add ponders (somehow)
+- Neoforge 1.21.1 port
 - Optional compatibility with other Create transit and security add-ons
 
 Planned features may change as development continues.
