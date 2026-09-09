@@ -238,12 +238,13 @@ To launch the Forge development client:
 
 ## ✅ Supported Mod Versions
 
-| Version               | Minecraft | Forge | Create  | Supported |
-|-----------------------|-----------|-------|---------|:---------:|
-| 0.1.3-beta (current)  | 1.20.1    | 47.x  | 6.0.8   |    Yes    |
-| 0.1.2-beta            | 1.20.1    | 47.x  | 0.5.1.f |  Legacy   |
-| 0.1.1-beta            | 1.20.1    | 47.x  | 0.5.1.f |  Legacy   |
-| 0.1.0-beta            | 1.20.1    | 47.x  | 0.5.1.f |  Legacy   |
+| Version              | Minecraft | Forge  | Create  | Supported |
+|----------------------|-----------|--------|---------|:---------:|
+| 0.1.4-beta (current) | 1.20.1    | 47.x   | 6.0.8   |    Yes    | 
+| 0.1.3-beta           | 1.20.1    | 47.x   | 6.0.8   |    Yes    |
+| 0.1.2-beta           | 1.20.1    | 47.x   | 0.5.1.f |  Legacy   |
+| 0.1.1-beta           | 1.20.1    | 47.x   | 0.5.1.f |  Legacy   |
+| 0.1.0-beta           | 1.20.1    | 47.x   | 0.5.1.f |  Legacy   |
 
 > This project is currently in beta, so features and saved item data may change between releases. Please confirm that you are using a supported version before opening an issue.
 
