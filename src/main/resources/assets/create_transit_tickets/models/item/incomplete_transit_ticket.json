@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "create_transit_tickets:item/blank_ticket"
+    "layer0": "create_transit_tickets:item/incomplete_transit_ticket"
   }
 }

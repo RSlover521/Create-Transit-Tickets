@@ -2,6 +2,7 @@ package com.rslover521.createtransittickets.registry;
 
 import com.rslover521.createtransittickets.CreateTransitTickets;
 import com.rslover521.createtransittickets.item.BlankTicketItem;
+import com.rslover521.createtransittickets.item.IncompleteTransitTicketItem;
 import com.rslover521.createtransittickets.item.TicketBlueprintItem;
 import com.rslover521.createtransittickets.item.TicketGateItem;
 import com.rslover521.createtransittickets.item.TransitTicketItem;
@@ -20,7 +21,7 @@ public final class ModItems {
     public static final RegistryObject<Item> TICKET_BLUEPRINT = ITEMS.register("ticket_blueprint",
             () -> new TicketBlueprintItem(new Item.Properties().stacksTo(1)));
     public static final RegistryObject<Item> INCOMPLETE_TRANSIT_TICKET = ITEMS.register("incomplete_transit_ticket",
-            () -> new Item(new Item.Properties().stacksTo(16)));
+            () -> new IncompleteTransitTicketItem(new Item.Properties().stacksTo(16)));
     public static final RegistryObject<Item> TRANSIT_TICKET = ITEMS.register("transit_ticket",
             () -> new TransitTicketItem(new Item.Properties().stacksTo(16)));
     public static final RegistryObject<Item> TICKET_GATE = ITEMS.register("ticket_gate",
