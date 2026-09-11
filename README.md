@@ -1,7 +1,5 @@
 # 🎟️ Create: Transit Tickets 🚂
 
-![Create: Transit Tickets mod icon](https://raw.githubusercontent.com/RSlover521/Create-Transit-Tickets/main/src/main/resources/create_transit_tickets.png)
-
 > 🚉 Survival-friendly, configurable transit tickets and ticket gates for Create train networks.
 
 [![GitHub Repository](https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github&color=darkcyan)](https://github.com/RSlover521/Create-Transit-Tickets)
