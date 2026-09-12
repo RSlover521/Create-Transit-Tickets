@@ -167,6 +167,7 @@ Examples:
 
 - Add ponders (somehow)
 - Neoforge 1.21.1 port
+- Backporting all the fixes to Create 0.5.x from Create 6.0.8
 - Optional compatibility with other Create transit and security add-ons
 
 Planned features may change as development continues.
