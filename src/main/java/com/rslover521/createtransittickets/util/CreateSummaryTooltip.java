@@ -10,7 +10,7 @@ import java.util.List;
 public final class CreateSummaryTooltip {
     private CreateSummaryTooltip() {
     }
-
+    
     public static void append(Item item, List<Component> tooltip) {
         ItemDescription description = ItemDescription.create(item, FontHelper.Palette.STANDARD_CREATE);
         if (description != null) {
