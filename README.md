@@ -56,7 +56,7 @@ The current `0.1.3-beta` release includes:
 2. Hold the Ticket Blueprint and right-click to open its configuration menu.
 3. Choose the ticket name, type, service, and any required duration or passage count, then select **Done**.
 4. Put the configured Ticket Blueprint into the hand of a powered **Deployer** positioned over a belt, depot, or other valid processing surface.
-5. Send a Blank Ticket underneath the Deployer. The Deployer applies the blueprint and produces an **Incomplete Transit Ticket** without consuming the reusable blueprint.
+5. Send a Blank Ticket underneath the Deployer and give the Deployer Ticket Blueprints. The Deployer will apply the blueprint and produce an **Incomplete Transit Ticket** without consuming the reusable blueprint.
 6. Send the Incomplete Transit Ticket beneath a powered **Mechanical Press**.
 7. The press produces an issued **Transit Ticket** containing the blueprint's configured name, type, service, and validity data.
 8. Hold the finished ticket and use it on a compatible **Ticket Gate**.
@@ -185,12 +185,10 @@ Translations are welcome through pull requests.
 
 1. Install **Minecraft 1.20.1**.
 2. Install **Minecraft Forge 47.x**. The development environment currently uses Forge **47.4.0**.
-3. Install **[Create 6.0.8](https://modrinth.com/mod/create/version/mc1.20.1-6.0.8)** for Minecraft 1.20.1 and any dependencies required by that release.
+3. Install the correct Create version, **[Create 6.0.8](https://modrinth.com/mod/create/version/mc1.20.1-6.0.8) (Compatible with the latest CTT release)** for Minecraft 1.20.1 and any dependencies required by that release.
 4. Download Create: Transit Tickets from the [GitHub Releases](https://github.com/RSlover521/Create-Transit-Tickets/releases) page.
 5. Place both Create and Create: Transit Tickets in the Minecraft `mods` folder.
 6. Launch Minecraft with the Forge profile.
-
-> Create: Transit Tickets 0.1.3-beta requires Create 6.0.8 and is not compatible with the older Create 0.5.1 line.
 
 ---
 
@@ -238,13 +236,13 @@ To launch the Forge development client:
 
 ## ✅ Supported Mod Versions
 
-| Version              | Minecraft | Forge  | Create  | Supported |
-|----------------------|-----------|--------|---------|:---------:|
-| 0.1.4-beta (current) | 1.20.1    | 47.x   | 6.0.8   |   Yes     | 
-| 0.1.3-beta           | 1.20.1    | 47.x   | 6.0.8   |    Yes    |
-| 0.1.2-beta           | 1.20.1    | 47.x   | 0.5.1.f |  Legacy   |
-| 0.1.1-beta           | 1.20.1    | 47.x   | 0.5.1.f |  Legacy   |
-| 0.1.0-beta           | 1.20.1    | 47.x   | 0.5.1.f |  Legacy   |
+| Version              | Minecraft | Forge  | Create        | Supported |
+|----------------------|-----------|--------|---------------|-----------|
+| 0.1.4-beta (current) | 1.20.1    | 47.x   | 6.0.x & 0.5.x | Yes       | 
+| 0.1.3-beta           | 1.20.1    | 47.x   | 6.0.x         | Yes       |
+| 0.1.2-beta           | 1.20.1    | 47.x   | 0.5.x         | Legacy    |
+| 0.1.1-beta           | 1.20.1    | 47.x   | 0.5.x         | Legacy    |
+| 0.1.0-beta           | 1.20.1    | 47.x   | 0.5.x         | Legacy    |
 
 > This project is currently in beta, so features and saved item data may change between releases. Please confirm that you are using a supported version before opening an issue.
 
