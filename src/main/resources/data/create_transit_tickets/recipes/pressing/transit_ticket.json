@@ -1,0 +1,13 @@
+{
+  "type": "create_transit_tickets:ticket_pressing",
+  "ingredients": [
+    {
+      "item": "create_transit_tickets:incomplete_transit_ticket"
+    }
+  ],
+  "results": [
+    {
+      "item": "create_transit_tickets:transit_ticket"
+    }
+  ]
+}

@@ -20,6 +20,7 @@ public class ModCreativeTabs {
                             .icon(() -> new ItemStack(ModItems.TRANSIT_TICKET.get()))
                             .displayItems((parameters, output) -> {
                                 output.accept(ModItems.TRANSIT_TICKET.get());
+                                output.accept(ModItems.INCOMPLETE_TRANSIT_TICKET.get());
                                 output.accept(ModItems.BLANK_TICKET.get());
                                 output.accept(ModItems.TICKET_BLUEPRINT.get());
                                 output.accept(ModItems.TICKET_GATE.get());

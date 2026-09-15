@@ -1,0 +1,17 @@
+{
+  "type": "create_transit_tickets:ticket_deploying",
+  "ingredients": [
+    {
+      "item": "create_transit_tickets:blank_ticket"
+    },
+    {
+      "item": "create_transit_tickets:ticket_blueprint"
+    }
+  ],
+  "keepHeldItem": true,
+  "results": [
+    {
+      "item": "create_transit_tickets:incomplete_transit_ticket"
+    }
+  ]
+}
