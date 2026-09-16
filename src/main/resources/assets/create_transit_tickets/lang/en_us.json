@@ -62,5 +62,10 @@
   "item.create_transit_tickets.transit_ticket.tooltip.behaviour1": "Validates the ticket and _opens_ the gate. Passage-limited tickets consume one use.",
   "item.create_transit_tickets.blank_ticket.tooltip.summary": "An unissued ticket ready to receive the settings stored in a _Ticket Blueprint_.",
   "item.create_transit_tickets.blank_ticket.tooltip.condition1": "When a Ticket Blueprint is Deployed onto it",
-  "item.create_transit_tickets.blank_ticket.tooltip.behaviour1": "Turns into an _Incomplete Transit Ticket_, ready to be finished with a _Mechanical Press_."
+  "item.create_transit_tickets.blank_ticket.tooltip.behaviour1": "Turns into an _Incomplete Transit Ticket_, ready to be finished with a _Mechanical Press_.",
+  "create_transit_tickets.ponder.blank_ticket.header": "Using Blank Tickets",
+  "create_transit_tickets.ponder.blank_ticket.text_1": "Blank Tickets are the starting point for every Transit Ticket",
+  "create_transit_tickets.ponder.blank_ticket.text_2": "Configure a Ticket Blueprint, then supply it to a Deployer above the Blank Ticket",
+  "create_transit_tickets.ponder.blank_ticket.text_3": "The Deployer copies the blueprint settings and creates an Incomplete Transit Ticket",
+  "create_transit_tickets.ponder.blank_ticket.text_4": "Finish the Incomplete Ticket with a Mechanical Press before using it at a Ticket Gate"
 }
