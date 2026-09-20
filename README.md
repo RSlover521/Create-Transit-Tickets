@@ -26,11 +26,13 @@ Tickets can use the **Local**, **Semi-Fast**, or **Express** service. Operators 
 
 The Blank Ticket, Ticket Blueprint, Transit Ticket, and Ticket Gate use Create-style tooltips. Hold Shift while hovering to see their summaries and usage instructions. Incomplete Transit Tickets display their recipe progress and next required machine directly in the tooltip.
 
+Create-style Ponder scenes are available for the Blank Ticket and Ticket Gate. They explain ticket production, validation rules, gate behavior, service requirements, and operator controls in-game.
+
 ---
 
 ## ✨ Current Version Highlights
 
-The current `0.1.3-beta` release includes:
+The current `1.0.0-c6` release includes:
 
 - 🚂 Support for **Create 6.0.8** on Minecraft 1.20.1.
 - 📝 An in-game Ticket Blueprint configuration menu with name, type, service, passage, and duration controls.
@@ -41,8 +43,31 @@ The current `0.1.3-beta` release includes:
 - 🚶 Gates that close after a player passes through or after a hard five-second timeout.
 - 🛡️ Server-validated configuration packets for blueprints and gates.
 - 📖 Create-style Shift summaries for the Blank Ticket, Ticket Blueprint, Transit Ticket, and Ticket Gate.
+- 💭 Create-style Ponder tutorials for producing tickets and operating, configuring, and dismantling Ticket Gates.
 - ⚙️ Two-stage ticket production using a Deployer followed by a Mechanical Press.
 - 🟨 An Incomplete Transit Ticket that preserves blueprint data and shows recipe progress `1/2`.
+
+---
+
+## 💭 In-Game Ponders
+
+Hover over a supported item and hold Create's Ponder key—`W` by default—to open its tutorial.
+
+### 📄 Using Blank Tickets
+
+The Blank Ticket Ponder explains the complete production sequence:
+
+1. Configure a reusable Ticket Blueprint.
+2. Deploy the blueprint onto a Blank Ticket.
+3. Receive an Incomplete Transit Ticket containing the copied settings.
+4. Finish the ticket with a Mechanical Press before using it at a Ticket Gate.
+
+### 🚧 Using Ticket Gates
+
+The Ticket Gate includes two Ponder chapters:
+
+- **Using Ticket Gates** covers issued-ticket validation, expired and used-up tickets, service matching, passage consumption, acceptance and denial feedback, the passable open state, closing after a passenger exits, and the five-second safety timeout.
+- **Configuring Ticket Gates** covers the operator-only Wrench menu, the Any Service, Local, Semi-Fast, and Express requirements, permission restrictions, and sneak-wrench dismantling.
 
 ---
 
@@ -165,9 +190,7 @@ Examples:
 
 ## 🔮 Planned Features
 
-- Add ponders (somehow)
 - Neoforge 1.21.1 port
-- Backporting all the fixes to Create 0.5.x from Create 6.0.8
 - Optional compatibility with other Create transit and security add-ons
 
 Planned features may change as development continues.
@@ -191,7 +214,7 @@ Translations are welcome through pull requests.
 5. Place both Create and Create: Transit Tickets in the Minecraft `mods` folder.
 6. Launch Minecraft with the Forge profile.
 
-> Create: Transit Tickets 0.1.3-beta requires Create 6.0.8 and is not compatible with the older Create 0.5.1 line.
+> This branch builds Create: Transit Tickets `1.0.0-c6` and requires Create 6.0.8. Use the separately marked Create 0.5 build when playing on the older Create 0.5.1 line.
 
 ---
 
@@ -241,13 +264,14 @@ To launch the Forge development client:
 
 | Version              | Minecraft | Forge  | Create  | Supported |
 |----------------------|-----------|--------|---------|:---------:|
-| 0.1.4-beta (current) | 1.20.1    | 47.x   | 6.0.8   |    Yes    | 
+| 1.0.0-c6 (current)   | 1.20.1    | 47.x   | 6.0.8   |    Yes    |
+| 0.1.4-beta           | 1.20.1    | 47.x   | 6.0.8   |    Yes    |
 | 0.1.3-beta           | 1.20.1    | 47.x   | 6.0.8   |    Yes    |
 | 0.1.2-beta           | 1.20.1    | 47.x   | 0.5.1.f |  Legacy   |
 | 0.1.1-beta           | 1.20.1    | 47.x   | 0.5.1.f |  Legacy   |
 | 0.1.0-beta           | 1.20.1    | 47.x   | 0.5.1.f |  Legacy   |
 
-> This project is currently in beta, so features and saved item data may change between releases. Please confirm that you are using a supported version before opening an issue.
+> Please confirm that you are using the build matching your Create version before opening an issue. Features and saved item data may still evolve between releases.
 
 ---
 
