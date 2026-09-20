@@ -21,8 +21,18 @@ public final class PonderClientEvents {
         PonderRegistrationHelper helper = new PonderRegistrationHelper(CreateTransitTickets.MOD_ID);
         PonderRegistry.addStoryBoard(helper.createStoryBoardEntry(
                 BlankTicketPonderScenes::usingBlankTickets,
-                new ResourceLocation("create", "deployer/processing"),
+                ResourceLocation.fromNamespaceAndPath("create", "deployer/processing"),
                 ForgeRegistries.ITEMS.getKey(ModItems.BLANK_TICKET.get())
+        ));
+        PonderRegistry.addStoryBoard(helper.createStoryBoardEntry(
+                TicketGatePonderScenes::usingTicketGates,
+                ResourceLocation.fromNamespaceAndPath("create", "deployer/processing"),
+                ForgeRegistries.ITEMS.getKey(ModItems.TICKET_GATE.get())
+        ));
+        PonderRegistry.addStoryBoard(helper.createStoryBoardEntry(
+                TicketGatePonderScenes::configuringTicketGates,
+                ResourceLocation.fromNamespaceAndPath("create", "deployer/processing"),
+                ForgeRegistries.ITEMS.getKey(ModItems.TICKET_GATE.get())
         ));
     }
 }

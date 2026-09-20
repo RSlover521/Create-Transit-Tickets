@@ -67,5 +67,18 @@
   "create_transit_tickets.ponder.blank_ticket.text_1": "Blank Tickets are the starting point for every Transit Ticket",
   "create_transit_tickets.ponder.blank_ticket.text_2": "Configure a Ticket Blueprint, then supply it to a Deployer above the Blank Ticket",
   "create_transit_tickets.ponder.blank_ticket.text_3": "The Deployer copies the blueprint settings and creates an Incomplete Transit Ticket",
-  "create_transit_tickets.ponder.blank_ticket.text_4": "Finish the Incomplete Ticket with a Mechanical Press before using it at a Ticket Gate"
+  "create_transit_tickets.ponder.blank_ticket.text_4": "Finish the Incomplete Ticket with a Mechanical Press before using it at a Ticket Gate",
+  "create_transit_tickets.ponder.ticket_gate.header": "Using Ticket Gates",
+  "create_transit_tickets.ponder.ticket_gate.text_1": "Ticket Gates validate issued Transit Tickets before allowing a passenger through",
+  "create_transit_tickets.ponder.ticket_gate.text_2": "Empty hands and unissued, expired, or used-up tickets are denied with an error message and sound",
+  "create_transit_tickets.ponder.ticket_gate.text_3": "A gate configured for Local, Semi-Fast, or Express service also rejects tickets from a different service",
+  "create_transit_tickets.ponder.ticket_gate.text_4": "A valid ticket matching the required service plays an acceptance sound and opens the gate",
+  "create_transit_tickets.ponder.ticket_gate.text_5": "Single-use and multiple-use tickets consume one passage; time-based tickets remain valid until they expire",
+  "create_transit_tickets.ponder.ticket_gate.text_6": "The open model is passable. Once a passenger enters, the gate waits for them to leave before closing",
+  "create_transit_tickets.ponder.ticket_gate.text_7": "If nobody enters, the gate closes automatically after five seconds",
+  "create_transit_tickets.ponder.ticket_gate_configuration.header": "Configuring Ticket Gates",
+  "create_transit_tickets.ponder.ticket_gate_configuration.text_1": "Server operators can right-click a Ticket Gate with a Wrench to open its configuration screen",
+  "create_transit_tickets.ponder.ticket_gate_configuration.text_2": "The required service can be Any Service, Local, Semi-Fast, or Express; the setting is saved with the gate",
+  "create_transit_tickets.ponder.ticket_gate_configuration.text_3": "Players without operator permission cannot configure or dismantle Ticket Gates",
+  "create_transit_tickets.ponder.ticket_gate_configuration.text_4": "An operator can sneak-right-click with a Wrench to dismantle the gate and recover it as an item"
 }
