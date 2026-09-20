@@ -18,6 +18,9 @@ public final class TransitTicketsPonderPlugin implements PonderPlugin {
     public void registerScenes(PonderSceneRegistrationHelper<ResourceLocation> helper) {
         PonderSceneRegistrationHelper<Item> itemHelper = helper.withKeyFunction(ForgeRegistries.ITEMS::getKey);
         itemHelper.forComponents(ModItems.BLANK_TICKET.get())
-                .addStoryBoard(new ResourceLocation("create", "deployer/processing"), BlankTicketPonderScenes::usingBlankTickets);
+                .addStoryBoard(ResourceLocation.fromNamespaceAndPath("create", "deployer/processing"), BlankTicketPonderScenes::usingBlankTickets);
+        itemHelper.forComponents(ModItems.TICKET_GATE.get())
+                .addStoryBoard(ResourceLocation.fromNamespaceAndPath("create", "deployer/processing"), TicketGatePonderScenes::usingTicketGates)
+                .addStoryBoard(ResourceLocation.fromNamespaceAndPath("create", "deployer/processing"), TicketGatePonderScenes::configuringTicketGates);
     }
 }
