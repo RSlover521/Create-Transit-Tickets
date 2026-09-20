@@ -17,42 +17,42 @@ public final class BlankTicketPonderScenes {
         scene.configureBasePlate(0, 0, 5);
         scene.showBasePlate();
         scene.world().showSection(util.select().everywhere(), Direction.DOWN);
-        scene.idle(20);
+        scene.idle(40);
 
         Vec3 itemDisplay = util.vector().of(2.5, 2.75, 2.5);
         scene.overlay().showControls(itemDisplay, Pointing.DOWN, 50)
                 .withItem(new ItemStack(ModItems.BLANK_TICKET.get()));
-        scene.overlay().showText(50)
+        scene.overlay().showText(100)
                 .text("Blank Tickets are the starting point for every Transit Ticket")
                 .independent()
                 .placeNearTarget();
-        scene.idle(60);
+        scene.idle(110);
 
         scene.addKeyframe();
         scene.overlay().showControls(itemDisplay, Pointing.DOWN, 60)
                 .withItem(new ItemStack(ModItems.TICKET_BLUEPRINT.get()));
-        scene.overlay().showText(60)
+        scene.overlay().showText(120)
                 .text("Configure a Ticket Blueprint, then supply it to a Deployer above the Blank Ticket")
                 .independent()
                 .placeNearTarget();
-        scene.idle(70);
+        scene.idle(130);
 
         scene.addKeyframe();
         scene.overlay().showControls(itemDisplay, Pointing.DOWN, 50)
                 .withItem(new ItemStack(ModItems.INCOMPLETE_TRANSIT_TICKET.get()));
-        scene.overlay().showText(50)
+        scene.overlay().showText(100)
                 .text("The Deployer copies the blueprint settings and creates an Incomplete Transit Ticket")
                 .independent()
                 .placeNearTarget();
-        scene.idle(60);
+        scene.idle(110);
 
         scene.addKeyframe();
         scene.overlay().showControls(itemDisplay, Pointing.DOWN, 60)
                 .withItem(new ItemStack(ModItems.TRANSIT_TICKET.get()));
-        scene.overlay().showText(60)
+        scene.overlay().showText(120)
                 .text("Finish the Incomplete Ticket with a Mechanical Press before using it at a Ticket Gate")
                 .independent()
                 .placeNearTarget();
-        scene.idle(70);
+        scene.idle(130);
     }
 }
