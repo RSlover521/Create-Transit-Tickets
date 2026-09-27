@@ -1,15 +1,11 @@
 package com.rslover521.createtransittickets.client.ponder;
 
 import com.rslover521.createtransittickets.CreateTransitTickets;
-import com.rslover521.createtransittickets.registry.ModItems;
-import com.simibubi.create.foundation.ponder.PonderRegistrationHelper;
-import com.simibubi.create.foundation.ponder.PonderRegistry;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.createmod.ponder.foundation.PonderIndex;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 
 @Mod.EventBusSubscriber(modid = CreateTransitTickets.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class PonderClientEvents {
@@ -18,21 +14,6 @@ public final class PonderClientEvents {
 
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
-        PonderRegistrationHelper helper = new PonderRegistrationHelper(CreateTransitTickets.MOD_ID);
-        PonderRegistry.addStoryBoard(helper.createStoryBoardEntry(
-                BlankTicketPonderScenes::usingBlankTickets,
-                ResourceLocation.fromNamespaceAndPath("create", "deployer/processing"),
-                ForgeRegistries.ITEMS.getKey(ModItems.BLANK_TICKET.get())
-        ));
-        PonderRegistry.addStoryBoard(helper.createStoryBoardEntry(
-                TicketGatePonderScenes::usingTicketGates,
-                ResourceLocation.fromNamespaceAndPath("create", "deployer/processing"),
-                ForgeRegistries.ITEMS.getKey(ModItems.TICKET_GATE.get())
-        ));
-        PonderRegistry.addStoryBoard(helper.createStoryBoardEntry(
-                TicketGatePonderScenes::configuringTicketGates,
-                ResourceLocation.fromNamespaceAndPath("create", "deployer/processing"),
-                ForgeRegistries.ITEMS.getKey(ModItems.TICKET_GATE.get())
-        ));
+        PonderIndex.addPlugin(new TransitTicketsPonderPlugin());
     }
 }

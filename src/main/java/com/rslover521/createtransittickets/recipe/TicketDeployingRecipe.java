@@ -8,7 +8,7 @@ import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
+import net.neoforged.neoforge.items.wrapper.RecipeWrapper;
 
 public final class TicketDeployingRecipe extends ItemApplicationRecipe {
     public TicketDeployingRecipe(ProcessingRecipeBuilder.ProcessingRecipeParams params) {

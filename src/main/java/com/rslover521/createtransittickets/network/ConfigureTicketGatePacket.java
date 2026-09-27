@@ -3,31 +3,43 @@ package com.rslover521.createtransittickets.network;
 import com.rslover521.createtransittickets.customBlocks.TicketGateBlock;
 import com.rslover521.createtransittickets.customBlocks.TicketGateBlockEntity;
 import com.rslover521.createtransittickets.util.GateServiceRequirement;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.network.NetworkEvent;
 
-import java.util.function.Supplier;
-
-public record ConfigureTicketGatePacket(BlockPos pos, GateServiceRequirement requirement) {
+public record ConfigureTicketGatePacket(BlockPos pos, GateServiceRequirement requirement)
+    implements CustomPacketPayload {
     private static final double MAX_DISTANCE_SQUARED = 64.0D;
+    public static final Type<ConfigureTicketGatePacket> TYPE = new Type<>(
+        ResourceLocation.fromNamespaceAndPath("create_transit_tickets", "configure_ticket_gate"));
+    public static final StreamCodec<ByteBuf, ConfigureTicketGatePacket> STREAM_CODEC =
+        StreamCodec.of(ConfigureTicketGatePacket::encode, ConfigureTicketGatePacket::decode);
 
-    public static void encode(ConfigureTicketGatePacket packet, FriendlyByteBuf buffer) {
+    private static void encode(ByteBuf byteBuf, ConfigureTicketGatePacket packet) {
+    FriendlyByteBuf buffer = new FriendlyByteBuf(byteBuf);
         buffer.writeBlockPos(packet.pos);
         buffer.writeEnum(packet.requirement);
     }
 
-    public static ConfigureTicketGatePacket decode(FriendlyByteBuf buffer) {
+    private static ConfigureTicketGatePacket decode(ByteBuf byteBuf) {
+        FriendlyByteBuf buffer = new FriendlyByteBuf(byteBuf);
         return new ConfigureTicketGatePacket(buffer.readBlockPos(), buffer.readEnum(GateServiceRequirement.class));
     }
 
+    @Override
+    public Type<? extends CustomPacketPayload> type() {
+        return TYPE;
+    }
+
     public static void handle(ConfigureTicketGatePacket packet,
-                              Supplier<NetworkEvent.Context> contextSupplier) {
-        NetworkEvent.Context context = contextSupplier.get();
+                              net.neoforged.neoforge.network.handling.IPayloadContext context) {
         context.enqueueWork(() -> {
-            ServerPlayer player = context.getSender();
-            if (player == null || !player.hasPermissions(2)
+            if (!(context.player() instanceof ServerPlayer player)
+                    || !player.hasPermissions(2)
                     || player.distanceToSqr(packet.pos.getX() + 0.5D,
                     packet.pos.getY() + 0.5D, packet.pos.getZ() + 0.5D) > MAX_DISTANCE_SQUARED) return;
             if (!TicketGateBlock.isCreateWrench(player.getMainHandItem())
@@ -36,6 +48,5 @@ public record ConfigureTicketGatePacket(BlockPos pos, GateServiceRequirement req
                 gate.setRequiredService(packet.requirement);
             }
         });
-        context.setPacketHandled(true);
     }
 }

@@ -5,14 +5,14 @@ import com.rslover521.createtransittickets.customBlocks.TicketGateBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
+import net.neoforged.neoforge.registries.RegistryObject;
 
 public final class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS =
-            DeferredRegister.create(ForgeRegistries.BLOCKS, CreateTransitTickets.MOD_ID);
+            DeferredRegister.create(NeoForgeRegistries.BLOCKS, CreateTransitTickets.MOD_ID);
 
     public static final RegistryObject<Block> TICKET_GATE = BLOCKS.register("ticket_gate",
             () -> new TicketGateBlock(BlockBehaviour.Properties.of()

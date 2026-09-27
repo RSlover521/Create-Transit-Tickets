@@ -7,14 +7,14 @@ import com.rslover521.createtransittickets.item.TicketBlueprintItem;
 import com.rslover521.createtransittickets.item.TicketGateItem;
 import com.rslover521.createtransittickets.item.TransitTicketItem;
 import net.minecraft.world.item.Item;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
+import net.neoforged.neoforge.registries.RegistryObject;
 
 public final class ModItems {
     public static final DeferredRegister<Item> ITEMS =
-            DeferredRegister.create(ForgeRegistries.ITEMS, CreateTransitTickets.MOD_ID);
+            DeferredRegister.create(NeoForgeRegistries.ITEMS, CreateTransitTickets.MOD_ID);
 
     public static final RegistryObject<Item> BLANK_TICKET = ITEMS.register("blank_ticket",
             () -> new BlankTicketItem(new Item.Properties()));

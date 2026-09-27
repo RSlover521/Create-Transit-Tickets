@@ -1,6 +1,6 @@
 package com.rslover521.createtransittickets.item;
 
-import com.simibubi.create.foundation.utility.Color;
+import net.createmod.catnip.theme.Color;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;

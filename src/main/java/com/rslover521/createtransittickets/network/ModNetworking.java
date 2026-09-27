@@ -1,27 +1,22 @@
 package com.rslover521.createtransittickets.network;
 
 import com.rslover521.createtransittickets.CreateTransitTickets;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.network.NetworkRegistry;
-import net.minecraftforge.network.simple.SimpleChannel;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 
 public final class ModNetworking {
-    private static final String VERSION = "1";
-    public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
-            new ResourceLocation(CreateTransitTickets.MOD_ID, "main"),
-            () -> VERSION, VERSION::equals, VERSION::equals);
-
     private ModNetworking() {
     }
 
-    public static void register() {
-        CHANNEL.registerMessage(0, ConfigureBlueprintPacket.class,
-                ConfigureBlueprintPacket::encode,
-                ConfigureBlueprintPacket::decode,
-                ConfigureBlueprintPacket::handle);
-        CHANNEL.registerMessage(1, ConfigureTicketGatePacket.class,
-                ConfigureTicketGatePacket::encode,
-                ConfigureTicketGatePacket::decode,
-                ConfigureTicketGatePacket::handle);
+    public static void register(IEventBus modBus) {
+        modBus.addListener(ModNetworking::registerPayloads);
+    }
+
+    private static void registerPayloads(RegisterPayloadHandlersEvent event) {
+        var registrar = event.registrar("1");
+        registrar.playToServer(ConfigureBlueprintPacket.TYPE,
+                ConfigureBlueprintPacket.STREAM_CODEC, ConfigureBlueprintPacket::handle);
+        registrar.playToServer(ConfigureTicketGatePacket.TYPE,
+                ConfigureTicketGatePacket.STREAM_CODEC, ConfigureTicketGatePacket::handle);
     }
 }

@@ -44,9 +44,9 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.fml.DistExecutor;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 public final class TicketGateBlock extends BaseEntityBlock implements IWrenchable {
     public static final BooleanProperty OPEN = BooleanProperty.create("open");
@@ -174,7 +174,7 @@ public final class TicketGateBlock extends BaseEntityBlock implements IWrenchabl
         if (!level.isClientSide) {
             Block.popResource(level, pos, new ItemStack(ModItems.TICKET_GATE.get()));
             level.removeBlock(pos, false);
-            playRemoveSound(level, pos);
+            IWrenchable.playRemoveSound(level, pos);
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
@@ -272,7 +272,7 @@ public final class TicketGateBlock extends BaseEntityBlock implements IWrenchabl
     }
 
     public static boolean isCreateWrench(ItemStack stack) {
-        return stack.getItem() == ForgeRegistries.ITEMS.getValue(CREATE_WRENCH_ID);
+        return stack.getItem() == NeoForgeRegistries.ITEMS.getValue(CREATE_WRENCH_ID);
     }
 
     private static InteractionResult openWrenchConfiguration(Level level, BlockPos pos, Player player) {
