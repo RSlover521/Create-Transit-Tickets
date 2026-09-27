@@ -9,6 +9,8 @@
 [![Open Issues](https://img.shields.io/github/issues/RSlover521/Create-Transit-Tickets?style=for-the-badge&logo=github&color=limegreen)](https://github.com/RSlover521/Create-Transit-Tickets/issues)
 [![Total Downloads](https://img.shields.io/github/downloads/RSlover521/Create-Transit-Tickets/total?style=for-the-badge&logo=github&color=white)](https://github.com/RSlover521/Create-Transit-Tickets/releases)
 
+# CREATE 0.5.x WILL BE DEPRECATED. IF YOU NEED SUPPORT FOR THOSE VERSIONS, PLEASE ASK NOW.
+
 ---
 
 ## 🚆 About
@@ -259,18 +261,20 @@ To launch the NeoForge development client:
 
 ---
 
-## ✅ Supported Mod Versions
+## ✅ Version Compatibility
 
-| Version            | Minecraft | Mod Loader          | Create  | Supported |
-|--------------------|-----------|---------------------|---------|:---------:|
-| 1.0.0-c6 (current) | 1.21.1    | NeoForge 21.1.251+  | 6.0.8   |    Yes    |
-| 0.1.4-beta         | 1.20.1    | Forge 47.x          | 6.0.8   |    Yes    |
-| 0.1.3-beta         | 1.20.1    | Forge 47.x          | 6.0.8   |    Yes    |
-| 0.1.2-beta         | 1.20.1    | Forge 47.x          | 0.5.1.f |  Legacy   |
-| 0.1.1-beta         | 1.20.1    | Forge 47.x          | 0.5.1.f |  Legacy   |
-| 0.1.0-beta         | 1.20.1    | Forge 47.x          | 0.5.1.f |  Legacy   |
+| Transit Tickets version | Minecraft 1.21.1 | Minecraft 1.20.1 | Create 6.0.8 | Create 0.5.1.f | NeoForge 21.1.251+ | Forge 47.x   |
+|-------------------------|:----------------:|:----------------:|:------------:|:--------------:|:------------------:|:------------:|
+| **1.0.0-c6 (current)**  |        ✅         |        ✅         |      ✅       |       ✅        |         ✅          |      ✅       |
+| **0.1.4-beta**          |        ❌         |        ✅         |      ✅       |       ✅        |         ❌          |      ✅       |
+| **0.1.3-beta**          |        ❌         |        ✅         |      ✅       |       ❌        |         ❌          |      ✅       |
+| **0.1.2-beta**          |        ❌         |        ✅         |      ❌       |       ✅        |         ❌          |      ✅       |
+| **0.1.1-beta**          |        ❌         |        ✅         |      ❌       |       ✅        |         ❌          |      ✅       |
+| **0.1.0-beta**          |        ❌         |        ✅         |      ❌       |       ✅        |         ❌          |      ✅       |
 
-> Please confirm that you are using the build matching your Create version before opening an issue. Features and saved item data may still evolve between releases.
+✅ Compatible &nbsp;&nbsp; ❌ Not compatible
+
+Downloads for every available build are on the [GitHub Releases](https://github.com/RSlover521/Create-Transit-Tickets/releases) page.
 
 ---
 
