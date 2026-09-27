@@ -34,7 +34,7 @@ Create-style Ponder scenes are available for the Blank Ticket and Ticket Gate. T
 
 The current `1.0.0-c6` release includes:
 
-- 🚂 Support for **Create 6.0.8** on Minecraft 1.20.1.
+- 🚂 Support for **Create 6.0.8** on **Minecraft 1.21.1** with **NeoForge 21.1.251 or newer**.
 - 📝 An in-game Ticket Blueprint configuration menu with name, type, service, passage, and duration controls.
 - 🎫 Single Use, Multiple Use, Limited Time, and Unlimited Time ticket types.
 - 🚉 Local, Semi-Fast, and Express ticket services.
@@ -112,7 +112,7 @@ The Transit Ticket becomes valid when the Mechanical Press finishes. A Limited T
 ### 🟨 Incomplete Transit Ticket
 
 - Produced when a Deployer applies a configured Ticket Blueprint to a Blank Ticket.
-- Stores a copy of the blueprint's NBT settings while moving between machines.
+- Stores a copy of the blueprint's configuration data while moving between machines.
 - Is not issued and cannot open a Ticket Gate.
 - Displays a half-filled progress bar representing step `1/2`.
 - Shows **Recipe Sequence**, **Progress: 1/2**, and **Next: Process in Press** in its tooltip.
@@ -190,7 +190,6 @@ Examples:
 
 ## 🔮 Planned Features
 
-- Neoforge 1.21.1 port
 - Optional compatibility with other Create transit and security add-ons
 
 Planned features may change as development continues.
@@ -207,14 +206,14 @@ Translations are welcome through pull requests.
 
 ## 📦 Installation
 
-1. Install **Minecraft 1.20.1**.
-2. Install **Minecraft Forge 47.x**. The development environment currently uses Forge **47.4.0**.
-3. Install **[Create 6.0.8](https://modrinth.com/mod/create/version/mc1.20.1-6.0.8)** for Minecraft 1.20.1 and any dependencies required by that release.
+1. Install **Minecraft 1.21.1**.
+2. Install **[NeoForge 21.1.251](https://neoforged.net/)** or newer for Minecraft 1.21.1.
+3. Install **[Create 6.0.8](https://modrinth.com/mod/create/versions?g=1.21.1)** for NeoForge 1.21.1 and its required dependencies.
 4. Download Create: Transit Tickets from the [GitHub Releases](https://github.com/RSlover521/Create-Transit-Tickets/releases) page.
 5. Place both Create and Create: Transit Tickets in the Minecraft `mods` folder.
-6. Launch Minecraft with the Forge profile.
+6. Launch Minecraft with the NeoForge profile.
 
-> This branch builds Create: Transit Tickets `1.0.0-c6` and requires Create 6.0.8. Use the separately marked Create 0.5 build when playing on the older Create 0.5.1 line.
+> This branch builds Create: Transit Tickets `1.0.0-c6` for Minecraft 1.21.1 and requires NeoForge 21.1.251 or newer and Create 6.0.8. Older Forge 1.20.1 builds are not compatible with this release.
 
 ---
 
@@ -222,7 +221,7 @@ Translations are welcome through pull requests.
 
 Requirements:
 
-- Java Development Kit 17
+- Java Development Kit 21
 - Git
 
 Clone and build the project:
@@ -241,7 +240,7 @@ On Windows PowerShell or Command Prompt, use:
 
 The built mod jar will be created in `build/libs/`.
 
-To launch the Forge development client:
+To launch the NeoForge development client:
 
 ```powershell
 .\gradlew.bat runClient
@@ -255,21 +254,21 @@ To launch the Forge development client:
 - [Releases](https://github.com/RSlover521/Create-Transit-Tickets/releases)
 - [Report an Issue](https://github.com/RSlover521/Create-Transit-Tickets/issues)
 - [Discussions](https://github.com/RSlover521/Create-Transit-Tickets/discussions)
-- [Minecraft Forge](https://files.minecraftforge.net/net/minecraftforge/forge/index_1.20.1.html)
-- [Create 6.0.8](https://modrinth.com/mod/create/version/mc1.20.1-6.0.8)
+- [NeoForge](https://neoforged.net/)
+- [Create 6.0.8 for Minecraft 1.21.1](https://modrinth.com/mod/create/versions?g=1.21.1)
 
 ---
 
 ## ✅ Supported Mod Versions
 
-| Version              | Minecraft | Forge     | Create  | Supported |
-|----------------------|-----------|-----------|---------|:---------:|
-| 1.0.0-c6 (current)   | 1.20.1    | 47.x      | 6.0.8   |    Yes    |
-| 0.1.4-beta           | 1.20.1    | 47.x      | 6.0.8   |    Yes    |
-| 0.1.3-beta           | 1.20.1    | 47.x      | 6.0.8   |    Yes    |
-| 0.1.2-beta           | 1.20.1    | 47.x      | 0.5.1.f |  Legacy   |
-| 0.1.1-beta           | 1.20.1    | 47.x      | 0.5.1.f |  Legacy   |
-| 0.1.0-beta           | 1.20.1    | 47.x      | 0.5.1.f |  Legacy   |
+| Version            | Minecraft | Mod Loader          | Create  | Supported |
+|--------------------|-----------|---------------------|---------|:---------:|
+| 1.0.0-c6 (current) | 1.21.1    | NeoForge 21.1.251+  | 6.0.8   |    Yes    |
+| 0.1.4-beta         | 1.20.1    | Forge 47.x          | 6.0.8   |    Yes    |
+| 0.1.3-beta         | 1.20.1    | Forge 47.x          | 6.0.8   |    Yes    |
+| 0.1.2-beta         | 1.20.1    | Forge 47.x          | 0.5.1.f |  Legacy   |
+| 0.1.1-beta         | 1.20.1    | Forge 47.x          | 0.5.1.f |  Legacy   |
+| 0.1.0-beta         | 1.20.1    | Forge 47.x          | 0.5.1.f |  Legacy   |
 
 > Please confirm that you are using the build matching your Create version before opening an issue. Features and saved item data may still evolve between releases.
 
@@ -278,4 +277,4 @@ To launch the Forge development client:
 ## 📜 License
 
 - MIT License — see the [project license](https://github.com/RSlover521/Create-Transit-Tickets/blob/main/LICENSE) for details.
-- Minecraft, Minecraft Forge, and Create belong to their respective owners.
+- Minecraft, NeoForge, Minecraft Forge, and Create belong to their respective owners.
