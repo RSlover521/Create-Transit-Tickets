@@ -12,9 +12,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.fml.DistExecutor;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -27,14 +24,13 @@ public final class TicketBlueprintItem extends Item {
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         ItemStack blueprint = player.getItemInHand(hand);
         if (level.isClientSide) {
-            DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
-                    () -> () -> com.rslover521.createtransittickets.client.ClientHooks.openBlueprintScreen(hand));
+            com.rslover521.createtransittickets.client.ClientHooks.openBlueprintScreen(hand);
         }
         return InteractionResultHolder.sidedSuccess(blueprint, level.isClientSide);
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         CreateSummaryTooltip.append(this, tooltip);
         TicketTypes type = TicketData.getTicketType(stack);
         tooltip.add(Component.translatable("tooltip.create_transit_tickets.type",

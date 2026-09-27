@@ -1,5 +1,6 @@
 package com.rslover521.createtransittickets.customBlocks;
 
+import com.mojang.serialization.MapCodec;
 import com.simibubi.create.content.equipment.wrench.IWrenchable;
 import com.rslover521.createtransittickets.registry.ModItems;
 import com.rslover521.createtransittickets.util.GateServiceRequirement;
@@ -7,6 +8,7 @@ import com.rslover521.createtransittickets.util.TicketData;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.network.protocol.game.ClientboundSetSubtitleTextPacket;
@@ -19,6 +21,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -44,11 +47,9 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.fml.DistExecutor;
-import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 public final class TicketGateBlock extends BaseEntityBlock implements IWrenchable {
+    public static final MapCodec<TicketGateBlock> CODEC = simpleCodec(TicketGateBlock::new);
     public static final BooleanProperty OPEN = BooleanProperty.create("open");
     public static final BooleanProperty PASSAGE_STARTED = BooleanProperty.create("passage_started");
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
@@ -105,20 +106,11 @@ public final class TicketGateBlock extends BaseEntityBlock implements IWrenchabl
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player,
-                                 InteractionHand hand, BlockHitResult hit) {
-        ItemStack heldStack = player.getItemInHand(hand);
-
+    protected ItemInteractionResult useItemOn(ItemStack heldStack, BlockState state, Level level, BlockPos pos,
+                                              Player player, InteractionHand hand, BlockHitResult hit) {
         if (isCreateWrench(heldStack)) {
-            return openWrenchConfiguration(level, pos, player);
-        }
-
-        if (heldStack.isEmpty()) {
-            if (!level.isClientSide) {
-                playDeniedSound(level, pos);
-                showError(player, Component.translatable("message.create_transit_tickets.ticket_gate.no_ticket"));
-            }
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            openWrenchConfiguration(level, pos, player);
+            return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }
 
         if (!isValidTicket(heldStack, level)) {
@@ -126,7 +118,7 @@ public final class TicketGateBlock extends BaseEntityBlock implements IWrenchabl
                 playDeniedSound(level, pos);
                 showError(player, Component.translatable("message.create_transit_tickets.ticket_gate.invalid_ticket"));
             }
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }
 
         GateServiceRequirement requirement = level.getBlockEntity(pos) instanceof TicketGateBlockEntity gate
@@ -137,7 +129,7 @@ public final class TicketGateBlock extends BaseEntityBlock implements IWrenchabl
                 showError(player, Component.translatable(
                         "message.create_transit_tickets.ticket_gate.wrong_service"));
             }
-            return InteractionResult.sidedSuccess(level.isClientSide);
+            return ItemInteractionResult.sidedSuccess(level.isClientSide);
         }
 
         if (!level.isClientSide) {
@@ -146,6 +138,16 @@ public final class TicketGateBlock extends BaseEntityBlock implements IWrenchabl
             openGate(state, level, pos);
         }
 
+        return ItemInteractionResult.sidedSuccess(level.isClientSide);
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player,
+                                               BlockHitResult hit) {
+        if (!level.isClientSide) {
+            playDeniedSound(level, pos);
+            showError(player, Component.translatable("message.create_transit_tickets.ticket_gate.no_ticket"));
+        }
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
@@ -244,6 +246,11 @@ public final class TicketGateBlock extends BaseEntityBlock implements IWrenchabl
     }
 
     @Override
+    protected MapCodec<? extends BaseEntityBlock> codec() {
+        return CODEC;
+    }
+
+    @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
     }
@@ -272,7 +279,7 @@ public final class TicketGateBlock extends BaseEntityBlock implements IWrenchabl
     }
 
     public static boolean isCreateWrench(ItemStack stack) {
-        return stack.getItem() == NeoForgeRegistries.ITEMS.getValue(CREATE_WRENCH_ID);
+        return stack.getItem() == BuiltInRegistries.ITEM.get(CREATE_WRENCH_ID);
     }
 
     private static InteractionResult openWrenchConfiguration(Level level, BlockPos pos, Player player) {
@@ -285,9 +292,7 @@ public final class TicketGateBlock extends BaseEntityBlock implements IWrenchabl
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
         if (level.isClientSide) {
-            DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
-                    () -> () -> com.rslover521.createtransittickets.client.ClientHooks
-                            .openTicketGateScreen(pos));
+            com.rslover521.createtransittickets.client.ClientHooks.openTicketGateScreen(pos);
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
@@ -310,11 +315,11 @@ public final class TicketGateBlock extends BaseEntityBlock implements IWrenchabl
     }
 
     private static void playAcceptedSound(Level level, BlockPos pos) {
-        level.playSound(null, pos, SoundEvents.NOTE_BLOCK_BELL.get(), SoundSource.BLOCKS, 0.8F, 1.6F);
+        level.playSound(null, pos, SoundEvents.NOTE_BLOCK_BELL.value(), SoundSource.BLOCKS, 0.8F, 1.6F);
     }
 
     private static void playDeniedSound(Level level, BlockPos pos) {
-        level.playSound(null, pos, SoundEvents.NOTE_BLOCK_BASS.get(), SoundSource.BLOCKS, 0.8F, 0.55F);
+        level.playSound(null, pos, SoundEvents.NOTE_BLOCK_BASS.value(), SoundSource.BLOCKS, 0.8F, 0.55F);
     }
 
     private static void showError(Player player, Component message) {

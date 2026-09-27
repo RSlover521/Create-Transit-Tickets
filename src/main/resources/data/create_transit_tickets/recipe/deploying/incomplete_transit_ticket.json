@@ -8,10 +8,10 @@
       "item": "create_transit_tickets:ticket_blueprint"
     }
   ],
-  "keepHeldItem": true,
+  "keep_held_item": true,
   "results": [
     {
-      "item": "create_transit_tickets:incomplete_transit_ticket"
+      "id": "create_transit_tickets:incomplete_transit_ticket"
     }
   ]
 }

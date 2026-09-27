@@ -13,7 +13,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 
-public record ConfigureBlueprintPacket(InteractionHand hand, String name, TicketTypes type,
+public record ConfigureBlueprintPacket(InteractionHand hand, String name, TicketTypes ticketType,
                        TicketServices service, long value) implements CustomPacketPayload {
     public static final Type<ConfigureBlueprintPacket> TYPE = new Type<>(
         ResourceLocation.fromNamespaceAndPath("create_transit_tickets", "configure_blueprint"));
@@ -24,7 +24,7 @@ public record ConfigureBlueprintPacket(InteractionHand hand, String name, Ticket
     FriendlyByteBuf buffer = new FriendlyByteBuf(byteBuf);
         buffer.writeEnum(packet.hand);
         buffer.writeUtf(packet.name, 64);
-        buffer.writeEnum(packet.type);
+        buffer.writeEnum(packet.ticketType);
         buffer.writeEnum(packet.service);
         buffer.writeVarLong(packet.value);
     }
@@ -45,8 +45,8 @@ public record ConfigureBlueprintPacket(InteractionHand hand, String name, Ticket
         context.enqueueWork(() -> {
             if (!(context.player() instanceof ServerPlayer player)) return;
             ItemStack stack = player.getItemInHand(packet.hand);
-            if (!stack.is(ModItems.TICKET_BLUEPRINT.get()) || !isValidValue(packet.type, packet.value)) return;
-            TicketData.configureBlueprint(stack, packet.name, packet.type, packet.service, packet.value);
+            if (!stack.is(ModItems.TICKET_BLUEPRINT.get()) || !isValidValue(packet.ticketType, packet.value)) return;
+            TicketData.configureBlueprint(stack, packet.name, packet.ticketType, packet.service, packet.value);
         });
     }
 

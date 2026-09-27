@@ -4,14 +4,14 @@ import com.rslover521.createtransittickets.registry.ModRecipeSerializers;
 import com.rslover521.createtransittickets.util.TicketData;
 import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.content.kinetics.deployer.ItemApplicationRecipe;
-import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
+import com.simibubi.create.content.kinetics.deployer.ItemApplicationRecipeParams;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 import net.neoforged.neoforge.items.wrapper.RecipeWrapper;
 
 public final class TicketDeployingRecipe extends ItemApplicationRecipe {
-    public TicketDeployingRecipe(ProcessingRecipeBuilder.ProcessingRecipeParams params) {
+    public TicketDeployingRecipe(ItemApplicationRecipeParams params) {
         super(AllRecipeTypes.DEPLOYING, params);
     }
 

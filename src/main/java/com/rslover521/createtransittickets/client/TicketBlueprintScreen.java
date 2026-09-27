@@ -1,7 +1,6 @@
 package com.rslover521.createtransittickets.client;
 
 import com.rslover521.createtransittickets.network.ConfigureBlueprintPacket;
-import com.rslover521.createtransittickets.network.ModNetworking;
 import com.rslover521.createtransittickets.util.TicketData;
 import com.rslover521.createtransittickets.util.TicketServices;
 import com.rslover521.createtransittickets.util.TicketTypes;
@@ -15,6 +14,7 @@ import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.Locale;
 import java.util.List;
@@ -111,7 +111,7 @@ public final class TicketBlueprintScreen extends Screen {
     private void save() {
         long value = getValue();
         if (value < 1L) return;
-        ModNetworking.CHANNEL.sendToServer(new ConfigureBlueprintPacket(hand,
+        PacketDistributor.sendToServer(new ConfigureBlueprintPacket(hand,
                 TicketData.normalizeName(nameBox.getValue()), ticketType, ticketService, value));
         onClose();
     }
@@ -126,7 +126,7 @@ public final class TicketBlueprintScreen extends Screen {
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-        renderBackground(graphics);
+        renderBackground(graphics, mouseX, mouseY, partialTick);
         super.render(graphics, mouseX, mouseY, partialTick);
         graphics.drawCenteredString(font, title, width / 2, height / 2 - 100, 0xFFFFFF);
         if (ticketType == TicketTypes.LIMITED_TIME && valueBox != null && valueBox.isHovered()) {

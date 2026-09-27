@@ -3,6 +3,7 @@ package com.rslover521.createtransittickets.customBlocks;
 import com.rslover521.createtransittickets.registry.ModBlockEntities;
 import com.rslover521.createtransittickets.util.GateServiceRequirement;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
@@ -42,15 +43,15 @@ public final class TicketGateBlockEntity extends BlockEntity {
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag) {
-        super.saveAdditional(tag);
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.saveAdditional(tag, registries);
         tag.putLong(OPENED_AT_TAG, openedAt);
         tag.putString(REQUIRED_SERVICE_TAG, requiredService.name());
     }
 
     @Override
-    public void load(CompoundTag tag) {
-        super.load(tag);
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.loadAdditional(tag, registries);
         openedAt = tag.getLong(OPENED_AT_TAG);
         try {
             requiredService = GateServiceRequirement.valueOf(tag.getString(REQUIRED_SERVICE_TAG));
@@ -60,8 +61,8 @@ public final class TicketGateBlockEntity extends BlockEntity {
     }
 
     @Override
-    public CompoundTag getUpdateTag() {
-        return saveWithoutMetadata();
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        return saveWithoutMetadata(registries);
     }
 
     @Override
@@ -70,8 +71,9 @@ public final class TicketGateBlockEntity extends BlockEntity {
     }
 
     @Override
-    public void onDataPacket(Connection connection, ClientboundBlockEntityDataPacket packet) {
+    public void onDataPacket(Connection connection, ClientboundBlockEntityDataPacket packet,
+                             HolderLookup.Provider registries) {
         CompoundTag tag = packet.getTag();
-        if (tag != null) load(tag);
+        if (tag != null) loadWithComponents(tag, registries);
     }
 }

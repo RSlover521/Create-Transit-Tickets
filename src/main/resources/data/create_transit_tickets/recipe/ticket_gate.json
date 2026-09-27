@@ -18,6 +18,6 @@
     }
   },
   "result": {
-    "item": "create_transit_tickets:ticket_blueprint"
+    "id": "create_transit_tickets:ticket_gate"
   }
 }

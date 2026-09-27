@@ -6,14 +6,14 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import net.neoforged.neoforge.registries.RegistryObject;
 
 public class ModCreativeTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, CreateTransitTickets.MOD_ID);
 
-    public static final RegistryObject<CreativeModeTab> CREATE_TRANSIT_TICKET_TAB =
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> CREATE_TRANSIT_TICKET_TAB =
             CREATIVE_MODE_TABS.register("create_transit_ticket", () ->
                     CreativeModeTab.builder()
                             .title(Component.translatable("itemGroup.create_transit_ticket.create_transit_ticket_tab"))

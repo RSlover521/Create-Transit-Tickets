@@ -7,7 +7,7 @@
   ],
   "results": [
     {
-      "item": "create_transit_tickets:transit_ticket"
+      "id": "create_transit_tickets:transit_ticket"
     }
   ]
 }
