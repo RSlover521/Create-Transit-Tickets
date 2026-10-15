@@ -9,7 +9,7 @@
 [![Open Issues](https://img.shields.io/github/issues/RSlover521/Create-Transit-Tickets?style=for-the-badge&logo=github&color=limegreen)](https://github.com/RSlover521/Create-Transit-Tickets/issues)
 [![Total Downloads](https://img.shields.io/github/downloads/RSlover521/Create-Transit-Tickets/total?style=for-the-badge&logo=github&color=white)](https://github.com/RSlover521/Create-Transit-Tickets/releases)
 
-# CREATE 0.5.x WILL BE DEPRECATED. IF YOU NEED SUPPORT FOR THOSE VERSIONS, PLEASE ASK NOW.
+# CREATE 0.5.1.x WILL BE DEPRECATED. IF YOU NEED SUPPORT FOR THOSE VERSIONS, PLEASE ASK NOW.
 
 ---
 
@@ -34,7 +34,7 @@ Create-style Ponder scenes are available for the Blank Ticket and Ticket Gate. T
 
 ## ✨ Current Version Highlights
 
-The current `1.0.0-c6` release includes:
+The current `1.0.1-c6` release includes:
 
 - 🚂 Support for **Create 6.0.8** on **Minecraft 1.21.1** with **NeoForge 21.1.251 or newer**.
 - 📝 An in-game Ticket Blueprint configuration menu with name, type, service, passage, and duration controls.
@@ -215,7 +215,7 @@ Translations are welcome through pull requests.
 5. Place both Create and Create: Transit Tickets in the Minecraft `mods` folder.
 6. Launch Minecraft with the NeoForge profile.
 
-> This branch builds Create: Transit Tickets `1.0.0-c6` for Minecraft 1.21.1 and requires NeoForge 21.1.251 or newer and Create 6.0.8. Older Forge 1.20.1 builds are not compatible with this release.
+> This branch builds Create: Transit Tickets `1.0.1-c6` for Minecraft 1.21.1 and requires NeoForge 21.1.251 or newer and Create 6.0.8. Older Forge 1.20.1 builds are not compatible with this release.
 
 ---
 
@@ -263,9 +263,10 @@ To launch the NeoForge development client:
 
 ## ✅ Version Compatibility
 
-| Transit Tickets version | Minecraft 1.21.1 | Minecraft 1.20.1 | Create 6.0.8 | Create 0.5.1.f | NeoForge 21.1.251+ | Forge 47.x   |
+| Transit Tickets version | Minecraft 1.21.1 | Minecraft 1.20.1 | Create 6.0.8 | Create 0.5.1.x | NeoForge 21.1.251+ | Forge 47.x   |
 |-------------------------|:----------------:|:----------------:|:------------:|:--------------:|:------------------:|:------------:|
-| **1.0.0 (current)**  |        ✅         |        ✅         |      ✅       |       ✅        |         ✅          |      ✅       |
+| **1.0.1** |        ✅ |        ❌ |      ✅ |       ❌ |         ✅ |      ❌ |
+| **1.0.0**  |        ✅         |        ✅         |      ✅       |       ✅        |         ✅          |      ✅       |
 | **0.1.4-beta**          |        ❌         |        ✅         |      ✅       |       ✅        |         ❌          |      ✅       |
 | **0.1.3-beta**          |        ❌         |        ✅         |      ✅       |       ❌        |         ❌          |      ✅       |
 | **0.1.2-beta**          |        ❌         |        ✅         |      ❌       |       ✅        |         ❌          |      ✅       |
