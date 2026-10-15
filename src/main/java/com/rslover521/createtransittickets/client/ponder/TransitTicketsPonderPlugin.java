@@ -5,8 +5,8 @@ import com.rslover521.createtransittickets.registry.ModItems;
 import net.createmod.ponder.api.registration.PonderPlugin;
 import net.createmod.ponder.api.registration.PonderSceneRegistrationHelper;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.Item;
-import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 public final class TransitTicketsPonderPlugin implements PonderPlugin {
     @Override
@@ -16,7 +16,7 @@ public final class TransitTicketsPonderPlugin implements PonderPlugin {
 
     @Override
     public void registerScenes(PonderSceneRegistrationHelper<ResourceLocation> helper) {
-        PonderSceneRegistrationHelper<Item> itemHelper = helper.withKeyFunction(NeoForgeRegistries.ITEMS::getKey);
+        PonderSceneRegistrationHelper<Item> itemHelper = helper.withKeyFunction(BuiltInRegistries.ITEM::getKey);
         itemHelper.forComponents(ModItems.BLANK_TICKET.get())
                 .addStoryBoard(ResourceLocation.fromNamespaceAndPath("create", "deployer/processing"), BlankTicketPonderScenes::usingBlankTickets);
         itemHelper.forComponents(ModItems.TICKET_GATE.get())

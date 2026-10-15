@@ -10,16 +10,15 @@ import com.rslover521.createtransittickets.registry.ModRecipeSerializers;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 
 @Mod(CreateTransitTickets.MOD_ID)
 public final class CreateTransitTickets {
     public static final String MOD_ID = "create_transit_tickets";
 
-    public CreateTransitTickets(FMLJavaModLoadingContext context, ModContainer modContainer) {
-        IEventBus modEventBus = context.getModEventBus();
+    public CreateTransitTickets(IEventBus modEventBus, ModContainer modContainer) {
         ModBlocks.register(modEventBus);
         ModBlockEntities.register(modEventBus);
         ModItems.register(modEventBus);
@@ -28,7 +27,7 @@ public final class CreateTransitTickets {
         ModNetworking.register(modEventBus);
     }
 
-    @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.GAME)
+    @EventBusSubscriber(modid = MOD_ID)
     public static final class ForgeEvents {
         private ForgeEvents() {
         }

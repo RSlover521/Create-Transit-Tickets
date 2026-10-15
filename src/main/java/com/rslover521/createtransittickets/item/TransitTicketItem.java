@@ -7,8 +7,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
-import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -24,7 +22,7 @@ public final class TransitTicketItem extends Item {
     }
 
     @Override
-    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flag) {
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         CreateSummaryTooltip.append(this, tooltip);
         if (!TicketData.isIssued(stack)) {
             tooltip.add(Component.translatable("tooltip.create_transit_tickets.unissued")
@@ -43,7 +41,7 @@ public final class TransitTicketItem extends Item {
             return;
         }
 
-        long now = level == null ? TicketData.getIssuedTime(stack) : level.getGameTime();
+        long now = context.level() == null ? TicketData.getIssuedTime(stack) : context.level().getGameTime();
         long remaining = TicketData.getValidUntil(stack) - now;
         if (remaining > 0) {
             tooltip.add(Component.translatable("tooltip.create_transit_tickets.valid")

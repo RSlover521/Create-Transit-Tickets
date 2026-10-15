@@ -3,23 +3,24 @@ package com.rslover521.createtransittickets.registry;
 import com.rslover521.createtransittickets.CreateTransitTickets;
 import com.rslover521.createtransittickets.recipe.TicketDeployingRecipe;
 import com.rslover521.createtransittickets.recipe.TicketPressingRecipe;
-import com.simibubi.create.content.processing.recipe.ProcessingRecipeSerializer;
+import com.simibubi.create.content.kinetics.deployer.ItemApplicationRecipe;
+import com.simibubi.create.content.processing.recipe.StandardProcessingRecipe;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import net.neoforged.neoforge.registries.NeoForgeRegistries;
-import net.neoforged.neoforge.registries.RegistryObject;
 
 public final class ModRecipeSerializers {
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS =
-            DeferredRegister.create(NeoForgeRegistries.RECIPE_SERIALIZERS, CreateTransitTickets.MOD_ID);
+            DeferredRegister.create(Registries.RECIPE_SERIALIZER, CreateTransitTickets.MOD_ID);
 
-    public static final RegistryObject<RecipeSerializer<?>> TICKET_DEPLOYING =
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<TicketDeployingRecipe>> TICKET_DEPLOYING =
             RECIPE_SERIALIZERS.register("ticket_deploying",
-                    () -> new ProcessingRecipeSerializer<>(TicketDeployingRecipe::new));
-    public static final RegistryObject<RecipeSerializer<?>> TICKET_PRESSING =
+                    () -> new ItemApplicationRecipe.Serializer<>(TicketDeployingRecipe::new));
+    public static final DeferredHolder<RecipeSerializer<?>, RecipeSerializer<TicketPressingRecipe>> TICKET_PRESSING =
             RECIPE_SERIALIZERS.register("ticket_pressing",
-                    () -> new ProcessingRecipeSerializer<>(TicketPressingRecipe::new));
+                    () -> new StandardProcessingRecipe.Serializer<>(TicketPressingRecipe::new));
 
     private ModRecipeSerializers() {
     }

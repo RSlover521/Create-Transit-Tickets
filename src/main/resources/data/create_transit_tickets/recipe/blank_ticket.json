@@ -5,7 +5,7 @@
     { "item": "minecraft:paper" }
   ],
   "result": {
-    "item": "create_transit_tickets:blank_ticket",
+    "id": "create_transit_tickets:blank_ticket",
     "count": 4
   }
 }

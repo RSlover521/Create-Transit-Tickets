@@ -3,7 +3,9 @@ package com.rslover521.createtransittickets.util;
 import com.rslover521.createtransittickets.registry.ModItems;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 
 public final class TicketData {
     public static final String TICKET_NAME = "ticket_name";
@@ -23,38 +25,38 @@ public final class TicketData {
 
     public static ItemStack createBlueprint(String name, long durationTicks) {
         ItemStack blueprint = new ItemStack(ModItems.TICKET_BLUEPRINT.get());
-        CompoundTag tag = blueprint.getOrCreateTag();
+        CompoundTag tag = new CompoundTag();
         tag.putString(TICKET_NAME, name);
         tag.putString(TICKET_TYPE, TicketTypes.LIMITED_TIME.name());
         tag.putString(TICKET_SERVICE, TicketServices.LOCAL.name());
         tag.putLong(DURATION_TICKS, Math.max(1L, durationTicks));
+        setTag(blueprint, tag);
         return blueprint;
     }
 
     public static ItemStack createPassageBlueprint(String name, int allowedPassages) {
         ItemStack blueprint = new ItemStack(ModItems.TICKET_BLUEPRINT.get());
-        CompoundTag tag = blueprint.getOrCreateTag();
+        CompoundTag tag = new CompoundTag();
         tag.putString(TICKET_NAME, name);
         tag.putString(TICKET_TYPE, allowedPassages == 1
                 ? TicketTypes.SINGLE_USE.name() : TicketTypes.MULTIPLE_USE.name());
         tag.putString(TICKET_SERVICE, TicketServices.LOCAL.name());
         tag.putInt(ALLOWED_PASSAGES, Math.max(1, allowedPassages));
+        setTag(blueprint, tag);
         return blueprint;
     }
 
     public static ItemStack createIncompleteTicket(ItemStack blueprint) {
         ItemStack incompleteTicket = new ItemStack(ModItems.INCOMPLETE_TRANSIT_TICKET.get());
-        CompoundTag source = blueprint.getTag();
-        if (source != null) {
-            incompleteTicket.setTag(source.copy());
-        }
+        CompoundTag source = getTag(blueprint);
+        setTag(incompleteTicket, source);
         return incompleteTicket;
     }
 
     public static ItemStack issueTicket(ItemStack blueprint, long issuedTime) {
         ItemStack ticket = new ItemStack(ModItems.TRANSIT_TICKET.get());
-        CompoundTag source = blueprint.getTag();
-        CompoundTag target = ticket.getOrCreateTag();
+        CompoundTag source = getTag(blueprint);
+        CompoundTag target = new CompoundTag();
 
         copyString(source, target, TICKET_NAME);
         copyString(source, target, TICKET_TYPE);
@@ -75,17 +77,18 @@ public final class TicketData {
         } else {
             target.putLong(VALID_UNTIL, Long.MAX_VALUE);
         }
+        setTag(ticket, target);
         return ticket;
     }
 
     public static String getTicketName(ItemStack stack) {
-        CompoundTag tag = stack.getTag();
-        return tag != null && tag.contains(TICKET_NAME, Tag.TAG_STRING) ? tag.getString(TICKET_NAME) : "";
+        CompoundTag tag = getTag(stack);
+        return tag.contains(TICKET_NAME, Tag.TAG_STRING) ? tag.getString(TICKET_NAME) : "";
     }
 
     public static TicketTypes getTicketType(ItemStack stack) {
-        CompoundTag tag = stack.getTag();
-        if (tag != null && tag.contains(TICKET_TYPE, Tag.TAG_STRING)) {
+        CompoundTag tag = getTag(stack);
+        if (tag.contains(TICKET_TYPE, Tag.TAG_STRING)) {
             String value = tag.getString(TICKET_TYPE);
             if ("UNLIMITED_PASS".equals(value)) return TicketTypes.UNLIMITED_TIME;
             try {
@@ -99,8 +102,8 @@ public final class TicketData {
     }
 
     public static TicketServices getTicketService(ItemStack stack) {
-        CompoundTag tag = stack.getTag();
-        if (tag != null && tag.contains(TICKET_SERVICE, Tag.TAG_STRING)) {
+        CompoundTag tag = getTag(stack);
+        if (tag.contains(TICKET_SERVICE, Tag.TAG_STRING)) {
             try {
                 return TicketServices.valueOf(tag.getString(TICKET_SERVICE));
             } catch (IllegalArgumentException ignored) {
@@ -111,19 +114,20 @@ public final class TicketData {
 
     public static void configureBlueprint(ItemStack stack, String name, TicketTypes type,
                                           TicketServices service, long value) {
-        CompoundTag tag = stack.getOrCreateTag();
-        tag.putString(TICKET_NAME, normalizeName(name));
-        tag.putString(TICKET_TYPE, type.name());
-        tag.putString(TICKET_SERVICE, service.name());
-        tag.remove(ALLOWED_PASSAGES);
-        tag.remove(DURATION_TICKS);
-        if (type == TicketTypes.SINGLE_USE) {
-            tag.putInt(ALLOWED_PASSAGES, 1);
-        } else if (type == TicketTypes.MULTIPLE_USE) {
-            tag.putInt(ALLOWED_PASSAGES, (int) Math.max(1L, Math.min(Integer.MAX_VALUE, value)));
-        } else if (type == TicketTypes.LIMITED_TIME) {
-            tag.putLong(DURATION_TICKS, Math.max(1L, value));
-        }
+        updateTag(stack, tag -> {
+            tag.putString(TICKET_NAME, normalizeName(name));
+            tag.putString(TICKET_TYPE, type.name());
+            tag.putString(TICKET_SERVICE, service.name());
+            tag.remove(ALLOWED_PASSAGES);
+            tag.remove(DURATION_TICKS);
+            if (type == TicketTypes.SINGLE_USE) {
+                tag.putInt(ALLOWED_PASSAGES, 1);
+            } else if (type == TicketTypes.MULTIPLE_USE) {
+                tag.putInt(ALLOWED_PASSAGES, (int) Math.max(1L, Math.min(Integer.MAX_VALUE, value)));
+            } else if (type == TicketTypes.LIMITED_TIME) {
+                tag.putLong(DURATION_TICKS, Math.max(1L, value));
+            }
+        });
     }
 
     public static String normalizeName(String name) {
@@ -155,51 +159,46 @@ public final class TicketData {
     }
 
     public static long getDuration(ItemStack stack) {
-        CompoundTag tag = stack.getTag();
-        if (tag == null || !tag.contains(DURATION_TICKS, Tag.TAG_ANY_NUMERIC)) {
+        CompoundTag tag = getTag(stack);
+        if (!tag.contains(DURATION_TICKS, Tag.TAG_ANY_NUMERIC)) {
             return DEFAULT_DURATION_TICKS;
         }
         return Math.max(1L, tag.getLong(DURATION_TICKS));
     }
 
     public static boolean isIssued(ItemStack stack) {
-        CompoundTag tag = stack.getTag();
-        return tag != null && tag.contains(ISSUED_TIME, Tag.TAG_ANY_NUMERIC)
+        CompoundTag tag = getTag(stack);
+        return tag.contains(ISSUED_TIME, Tag.TAG_ANY_NUMERIC)
                 && (tag.contains(VALID_UNTIL, Tag.TAG_ANY_NUMERIC)
                 || tag.contains(REMAINING_PASSAGES, Tag.TAG_ANY_NUMERIC));
     }
 
     public static boolean isPassageLimited(ItemStack stack) {
-        CompoundTag tag = stack.getTag();
-        return tag != null && tag.contains(ALLOWED_PASSAGES, Tag.TAG_ANY_NUMERIC);
+        return getTag(stack).contains(ALLOWED_PASSAGES, Tag.TAG_ANY_NUMERIC);
     }
 
     public static int getAllowedPassages(ItemStack stack) {
-        CompoundTag tag = stack.getTag();
-        return tag == null ? 0 : Math.max(0, tag.getInt(ALLOWED_PASSAGES));
+        return Math.max(0, getTag(stack).getInt(ALLOWED_PASSAGES));
     }
 
     public static int getRemainingPassages(ItemStack stack) {
-        CompoundTag tag = stack.getTag();
-        return tag == null ? 0 : Math.max(0, tag.getInt(REMAINING_PASSAGES));
+        return Math.max(0, getTag(stack).getInt(REMAINING_PASSAGES));
     }
 
     public static boolean consumePassage(ItemStack stack) {
         if (!isPassageLimited(stack)) return true;
         int remaining = getRemainingPassages(stack);
         if (remaining <= 0) return false;
-        stack.getOrCreateTag().putInt(REMAINING_PASSAGES, remaining - 1);
+        updateTag(stack, tag -> tag.putInt(REMAINING_PASSAGES, remaining - 1));
         return true;
     }
 
     public static long getIssuedTime(ItemStack stack) {
-        CompoundTag tag = stack.getTag();
-        return tag == null ? 0L : tag.getLong(ISSUED_TIME);
+        return getTag(stack).getLong(ISSUED_TIME);
     }
 
     public static long getValidUntil(ItemStack stack) {
-        CompoundTag tag = stack.getTag();
-        return tag == null ? 0L : tag.getLong(VALID_UNTIL);
+        return getTag(stack).getLong(VALID_UNTIL);
     }
 
     public static String formatDuration(long ticks) {
@@ -216,9 +215,22 @@ public final class TicketData {
     }
 
     private static void copyString(CompoundTag source, CompoundTag target, String key) {
-        if (source != null && source.contains(key, Tag.TAG_STRING)) {
+        if (source.contains(key, Tag.TAG_STRING)) {
             target.putString(key, source.getString(key));
         }
+    }
+
+    private static CompoundTag getTag(ItemStack stack) {
+        CustomData data = stack.get(DataComponents.CUSTOM_DATA);
+        return data == null ? new CompoundTag() : data.copyTag();
+    }
+
+    private static void setTag(ItemStack stack, CompoundTag tag) {
+        CustomData.set(DataComponents.CUSTOM_DATA, stack, tag);
+    }
+
+    private static void updateTag(ItemStack stack, java.util.function.Consumer<CompoundTag> updater) {
+        CustomData.update(DataComponents.CUSTOM_DATA, stack, updater);
     }
 
     private static long saturatingAdd(long left, long right) {

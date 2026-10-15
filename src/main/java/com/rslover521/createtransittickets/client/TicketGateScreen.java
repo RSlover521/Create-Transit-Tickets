@@ -2,7 +2,6 @@ package com.rslover521.createtransittickets.client;
 
 import com.rslover521.createtransittickets.customBlocks.TicketGateBlockEntity;
 import com.rslover521.createtransittickets.network.ConfigureTicketGatePacket;
-import com.rslover521.createtransittickets.network.ModNetworking;
 import com.rslover521.createtransittickets.util.GateServiceRequirement;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -11,6 +10,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.util.Locale;
 
@@ -51,13 +51,13 @@ public final class TicketGateScreen extends Screen {
     }
 
     private void save() {
-        ModNetworking.CHANNEL.sendToServer(new ConfigureTicketGatePacket(pos, requirement));
+        PacketDistributor.sendToServer(new ConfigureTicketGatePacket(pos, requirement));
         onClose();
     }
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-        renderBackground(graphics);
+        renderBackground(graphics, mouseX, mouseY, partialTick);
         super.render(graphics, mouseX, mouseY, partialTick);
         graphics.drawCenteredString(font, title, width / 2, height / 2 - 65, 0xFFFFFF);
     }
