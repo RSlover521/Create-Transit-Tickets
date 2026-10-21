@@ -242,6 +242,8 @@ On Windows PowerShell or Command Prompt, use:
 
 The built mod jar will be created in `build/libs/`.
 
+`mod_version` in `gradle.properties` is the internal mod version (for example, `1.0.1-c6`) and must start with a number. The build adds the loader and Minecraft version to the JAR filename separately, producing `create_transit_tickets-neoforge-1.21.1-1.0.1-c6.jar`.
+
 To launch the NeoForge development client:
 
 ```powershell

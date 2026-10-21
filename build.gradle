@@ -11,6 +11,11 @@ base {
     archivesName = mod_id
 }
 
+// Keep loader/Minecraft labels in filenames, separate from the internal mod version.
+tasks.withType(Jar).configureEach {
+    archiveVersion = "neoforge-${minecraft_version}-${mod_version}"
+}
+
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 sourceSets.main.resources {
