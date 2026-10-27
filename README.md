@@ -9,7 +9,7 @@
 [![Open Issues](https://img.shields.io/github/issues/RSlover521/Create-Transit-Tickets?style=for-the-badge&logo=github&color=limegreen)](https://github.com/RSlover521/Create-Transit-Tickets/issues)
 [![Total Downloads](https://img.shields.io/github/downloads/RSlover521/Create-Transit-Tickets/total?style=for-the-badge&logo=github&color=white)](https://github.com/RSlover521/Create-Transit-Tickets/releases)
 
-# CREATE 0.5.1.x WILL BE DEPRECATED. IF YOU NEED SUPPORT FOR THOSE VERSIONS, PLEASE ASK NOW.
+**CREATE 0.5.1.x WILL BE DEPRECATED. IF YOU NEED SUPPORT FOR THOSE VERSIONS, PLEASE ASK NOW.**
 
 ---
 
